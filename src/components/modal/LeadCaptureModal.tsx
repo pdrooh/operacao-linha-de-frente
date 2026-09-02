@@ -62,12 +62,6 @@ export function LeadCaptureModal() {
       className="lead-dialog"
     >
       <div className="lead-dialog__panel surface-paper">
-        {/* Alça: sinaliza que o painel é uma folha arrastável no mobile. */}
-        <span
-          aria-hidden="true"
-          className="absolute left-1/2 top-3 h-1 w-10 -translate-x-1/2 rounded-full bg-rule sm:hidden"
-        />
-
         <button
           type="button"
           onClick={close}

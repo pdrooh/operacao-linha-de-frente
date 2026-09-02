@@ -26,11 +26,11 @@ export function TestimonialStrip() {
   }, []);
 
   return (
-    <ul className="-mx-[var(--gutter,24px)] mt-12 flex snap-x snap-mandatory list-none gap-4 overflow-x-auto px-[var(--gutter,24px)] pb-5 pt-1 [scrollbar-width:thin] sm:mt-16 sm:gap-5 lg:ml-0 lg:pl-0">
+    <ul className="-mx-[var(--gutter,24px)] mt-12 flex list-none gap-4 overflow-x-auto overscroll-x-contain px-[var(--gutter,24px)] pb-5 pt-1 [scrollbar-width:thin] sm:mt-16 sm:gap-5 lg:ml-0 lg:pl-0">
       {testimonials.map((person, index) => (
         <li
           key={person.id}
-          className="shrink-0 snap-start"
+          className="shrink-0"
           style={{ marginTop: index % 2 === 1 ? "1.5rem" : undefined }}
         >
           {ativo === person.id && person.videoSrc ? (
