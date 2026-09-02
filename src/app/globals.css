@@ -464,6 +464,16 @@
     }
   }
 
+  /* --- Rótulo do trilho ----------------------------------------------------
+     O nome da estação corre na vertical, à esquerda da linha. Sem o
+     writing-mode o texto sai na horizontal e o deslocamento de 100% da própria
+     largura o empurra para fora da viewport — era o corte que aparecia.
+     ------------------------------------------------------------------------ */
+  .rail-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
   /* --- A Linha: jornada do paciente --------------------------------------- */
   .journey {
     --dot: 11px;
