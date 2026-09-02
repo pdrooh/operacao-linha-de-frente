@@ -83,3 +83,44 @@ corporativo da DocFounder** — é iconografia do programa.
 | **Garantia de satisfação** | O briefing traz "(ex: 7 dias)?" — não confirmado. **Nada é publicado.** | `offer.guarantee` — mude para `{ enabled: true, days, copy }` quando confirmado. |
 | **Prazo real da oferta** | Sem data. A página diz "por tempo limitado" e **não exibe contador**. | `offer.endsAt` |
 | **Dados do controlador (LGPD)** | Razão social, CNPJ, endereço, encarregado, operadores contratados, foro, prazo de acesso. | Blocos "Pendente do cliente" em `/privacidade` e `/termos` |
+
+---
+
+## Vídeos de depoimento — inventário recebido
+
+Pasta entregue pelo cliente (Drive, acesso público), 11 arquivos, 417 MB brutos.
+Recomprimidos para 75 MB em H.264 CRF 24, borda maior limitada a 1280px,
+`+faststart`, áudio AAC 96k mono. Posters extraídos do próprio vídeo aos 2,5s,
+com recorte central 9:16 para casar com o cartão.
+
+| Destino | Origem | Resolução | Duração | Bruto → Otimizado |
+|---|---|---|---|---|
+| `eline-lobo` | 01-Eline Lobo-Cardiologista | 720×1280 | 58s | 19,7 → 6,8 MB |
+| `fabio-strauss` | 02-Fabio Strauss-Cirurgiao Geral | 478×850 | 60s | 11,2 → 4,0 MB |
+| `wilson-dimartini` | 03-Wilson Dimartini-Oftalmologista | 480×848 | 50s | 7,7 → 6,0 MB |
+| `daniel-dorta` | Daniel Dorta @drdanieldorta | **3840×2160 (horizontal)** | 45s | 222,2 → 6,4 MB |
+| `kamilla` | Dra Kamilla depoimento | **480×480 (quadrado)** | 60s | 4,3 → 3,7 MB |
+| `marcelo-watanabe` | EDITADO DEPOIMENTO MARCELO | 2160×3840 | 39s | 72,8 → 11,1 MB |
+| `marcus-bissiguini` | Marcus - Oftalmo | 720×1280 | 71s | 23,9 → 13,9 MB |
+| `petterson-guedes` | Petterson Guedes | 480×848 | 77s | 13,8 → 6,5 MB |
+| `clovisa-reck` | zClovisa Reck-Otorrino | 720×1280 | 60s | 20,3 → 8,5 MB |
+
+### Pendências abertas
+
+1. **`WhatsApp Video 2025-08-24 at 00.12.43.mp4`** (392×850, 66s) — sem
+   identificação. Não foi publicado: não se atribui um depoimento a alguém por
+   suposição. Aguarda o cliente informar de quem é.
+
+2. **`Tatiana-Geriatria-@dratatianacosta.medica.mp4`** (392×850, 63s) — Dra.
+   Tatiana Costa, Geriatria. Tem vídeo, mas **não consta na página oficial** da
+   Operação Linha de Frente, então não há foto nem confirmação de uso. Aguarda
+   decisão do cliente.
+
+3. **Proporções divergentes.** Os arquivos chegam em 9:16, 1:1 e 16:9. O
+   lightbox respeita a proporção real de cada um; os cartões usam recorte
+   central 9:16. O de Daniel Dorta (16:9 4K) recorta bem porque ele está
+   centralizado — se o enquadramento mudar em futuras entregas, revisar.
+
+4. **Qualidade de origem da Dra. Kamilla.** 480×480 a 0,6 Mbps é a menor
+   qualidade do conjunto; o poster fica visivelmente mais macio que os demais.
+   Se houver arquivo original melhor, vale substituir.
