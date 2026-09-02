@@ -793,11 +793,15 @@
   }
 
   .media-dialog__panel video {
+    /* Largura e altura livres, limitadas pelo painel e pela viewport: o vídeo
+       encolhe pela própria proporção em vez de ganhar tarja lateral quando a
+       altura é o limite. */
     display: block;
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: 100%;
     max-height: calc(100dvh - 9rem);
-    object-fit: contain;
+    margin-inline: auto;
   }
 
   .media-dialog[open] .media-dialog__panel {
