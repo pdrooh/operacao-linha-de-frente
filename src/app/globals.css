@@ -1,26 +1,796 @@
 @import "tailwindcss";
 
+/* ============================================================================
+   OPERAÇÃO LINHA DE FRENTE — Design tokens
+   Derivados da identidade oficial DocFounder (docfounder.com.br):
+   forest hsl(158 41% 18%) · gold hsl(33 38% 54%) · bone hsl(40 20% 98%)
+   Convertidos para OKLCH para gradação perceptualmente uniforme.
+   ========================================================================== */
+
+@theme {
+  /* --- Registro profundo (hero, mecanismo, oferta) --- */
+  --color-ink: oklch(17% 0.026 168);
+  --color-ink-raised: oklch(21.5% 0.030 168);
+  --color-forest: oklch(34.2% 0.050 167);
+  --color-forest-mid: oklch(43.7% 0.067 167);
+  --color-forest-vivid: oklch(52.7% 0.083 166);
+
+  /* --- Registro papel (problema, transformação, programa, faq) --- */
+  --color-bone: oklch(98.6% 0.002 85);
+  --color-bone-raised: oklch(96.4% 0.004 85);
+  --color-bone-sunk: oklch(93.8% 0.005 85);
+  --color-rule: oklch(90.5% 0.006 85);
+
+  /* --- Tinta --- */
+  --color-graphite: oklch(24.3% 0.007 122);
+  --color-graphite-soft: oklch(45% 0.008 122);
+
+  /* --- Latão (acento) --- */
+  --color-brass: oklch(67.4% 0.082 71);
+  --color-brass-light: oklch(78% 0.062 72);
+  --color-brass-deep: oklch(54% 0.079 70);
+
+  --color-olive: oklch(44.2% 0.083 126);
+  --color-alert: oklch(56% 0.150 28);
+
+  /* --- Tipografia --- */
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-prose: var(--font-literata), ui-serif, Georgia, serif;
+
+  /* --- Raios --- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+
+  /* --- Movimento --- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Permite transicionar de/para `auto` (acordeão do FAQ) */
+  interpolate-size: allow-keywords;
+
+  /* Larguras de contêiner */
+  --measure: 1200px;
+  --measure-wide: 1400px;
+  --measure-prose: 62ch;
+
+  /* Trilho da Linha (desktop) */
+  --rail-w: 88px;
+
+  /* Progresso de rolagem — escrito por FrontLineRail */
+  --line-progress: 0;
+
+  --shadow-lift: 0 1px 2px oklch(17% 0.026 168 / 0.06), 0 8px 24px -12px oklch(17% 0.026 168 / 0.22);
+  --shadow-modal: 0 40px 80px -24px oklch(17% 0.026 168 / 0.45), 0 2px 8px oklch(17% 0.026 168 / 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    min-width: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-graphite);
+    font-family: var(--font-display);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  /* Números sempre tabulares: preços, contagens, indicadores */
+  :where(.tnum, table, time, output) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :where(h1, h2, h3, h4) {
+    font-weight: 620;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-brass);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Alvo de foco em superfícies claras precisa de latão escuro */
+  .surface-paper :focus-visible {
+    outline-color: var(--color-brass-deep);
+  }
+
+  [hidden] {
+    display: none !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* --- Contêiner com calha do trilho ------------------------------------ */
+  .shell {
+    width: 100%;
+    max-width: calc(var(--measure) + 2 * var(--gutter, 24px));
+    margin-inline: auto;
+    padding-inline: var(--gutter, 24px);
+  }
+
+  @media (min-width: 480px) {
+    .shell {
+      --gutter: 32px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      --gutter: 48px;
+      padding-left: calc(var(--rail-w) + 24px);
+      max-width: calc(var(--measure) + var(--rail-w) + 72px);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .shell {
+      --gutter: 64px;
+    }
+  }
+
+  /* --- Escala tipográfica ----------------------------------------------- */
+  .t-display {
+    font-size: clamp(2.05rem, 1.45rem + 2.6vw, 3.45rem);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
+    font-weight: 640;
+  }
+
+  .t-h2 {
+    font-size: clamp(1.95rem, 1.25rem + 2.9vw, 3.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.032em;
+    font-weight: 620;
+  }
+
+  .t-h3 {
+    font-size: clamp(1.3rem, 1.08rem + 0.95vw, 1.85rem);
+    line-height: 1.14;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+  }
+
+  .t-lead {
+    font-size: clamp(1.125rem, 1.02rem + 0.5vw, 1.4rem);
+    line-height: 1.5;
+    letter-spacing: -0.012em;
+  }
+
+  .t-body {
+    font-family: var(--font-prose);
+    font-size: clamp(1.0625rem, 1.01rem + 0.24vw, 1.1875rem);
+    line-height: 1.66;
+    letter-spacing: -0.002em;
+    max-width: var(--measure-prose);
+  }
+
+  .t-label {
+    font-size: 0.6875rem;
+    font-weight: 620;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .t-meta {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    letter-spacing: 0.005em;
+  }
+
+  /* Texto claro sobre fundo escuro precisa de mais ar */
+  .surface-deep :where(.t-body) {
+    line-height: 1.74;
+  }
+
+  /* --- Superfícies ------------------------------------------------------- */
+  .surface-deep {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  .surface-paper {
+    background-color: var(--color-bone);
+    color: var(--color-graphite);
+  }
+
+  .surface-paper-raised {
+    background-color: var(--color-bone-raised);
+    color: var(--color-graphite);
+  }
+
+  /* Textura de papel: grão fino, quase imperceptível, dá corpo ao bone */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: radial-gradient(oklch(24% 0.007 122 / 0.16) 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+  }
+
+  .surface-deep.grain::before {
+    mix-blend-mode: screen;
+    opacity: 0.18;
+    background-image: radial-gradient(oklch(98% 0.002 85 / 0.5) 0.5px, transparent 0.5px);
+  }
+
+  /* --- Régua de latão ---------------------------------------------------- */
+  .rule-brass {
+    border-color: color-mix(in oklab, var(--color-brass) 34%, transparent);
+  }
+
+  /* --- Botão principal --------------------------------------------------- */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 56px;
+    padding: 0 1.25rem;
+    border-radius: var(--radius-sm);
+    font-weight: 640;
+    /* Mobile: rótulo em uma linha dentro de um botão de largura total */
+    font-size: 0.8125rem;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 220ms var(--ease-out-quint),
+      box-shadow 220ms var(--ease-out-quint),
+      background-color 180ms linear,
+      color 180ms linear;
+  }
+
+  @media (min-width: 480px) {
+    .btn {
+      padding-inline: 1.5rem;
+      font-size: 0.9375rem;
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .btn-primary {
+    background-color: var(--color-brass);
+    color: var(--color-ink);
+    box-shadow:
+      inset 0 1px 0 oklch(100% 0 0 / 0.28),
+      0 10px 24px -14px oklch(67.4% 0.082 71 / 0.9);
+  }
+
+  /* Varredura de luz no hover — apenas transform, sem reflow */
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      oklch(100% 0 0 / 0.42) 48%,
+      transparent 74%
+    );
+    transform: translateX(-105%);
+    transition: transform 620ms var(--ease-out-expo);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--color-brass-light);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 oklch(100% 0 0 / 0.34),
+      0 16px 32px -16px oklch(67.4% 0.082 71 / 1);
+  }
+
+  .btn-primary:hover:not(:disabled)::after {
+    transform: translateX(105%);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: currentColor;
+    border: 1px solid color-mix(in oklab, currentColor 26%, transparent);
+    min-height: 48px;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    border-color: color-mix(in oklab, currentColor 55%, transparent);
+    background-color: color-mix(in oklab, currentColor 6%, transparent);
+  }
+
+  /* --- Campo de formulário ----------------------------------------------- */
+  .field {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.95rem 1rem 0.85rem;
+    background-color: var(--color-bone);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-size: 1rem; /* 16px: impede zoom automático no iOS */
+    color: var(--color-graphite);
+    transition: border-color 160ms linear, box-shadow 160ms linear;
+  }
+
+  .field::placeholder {
+    color: color-mix(in oklab, var(--color-graphite) 55%, transparent);
+  }
+
+  .field:hover:not(:disabled) {
+    border-color: color-mix(in oklab, var(--color-graphite) 30%, transparent);
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: var(--color-brass-deep);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-brass) 24%, transparent);
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: var(--color-alert);
+  }
+
+  .field[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-alert) 20%, transparent);
+  }
+
+  /* --- Modal ------------------------------------------------------------- */
+  .lead-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    /* Ancorado embaixo no mobile: o painel sobe como bottom sheet. */
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .lead-dialog:not([open]) {
+    display: none;
+  }
+
+  .lead-dialog::backdrop {
+    background-color: oklch(17% 0.026 168 / 0.62);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 320ms var(--ease-out-quint);
+  }
+
+  .lead-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .lead-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .lead-dialog__panel {
+    position: relative;
+    width: 100%;
+    max-height: 92dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2.25rem 1.5rem max(2rem, calc(1.5rem + env(safe-area-inset-bottom)));
+    border-top-left-radius: var(--radius-xl);
+    border-top-right-radius: var(--radius-xl);
+    box-shadow: var(--shadow-modal);
+    transform: translateY(2rem);
+    opacity: 0;
+    transition:
+      transform 380ms var(--ease-out-expo),
+      opacity 260ms var(--ease-out-quint);
+  }
+
+  .lead-dialog[open] .lead-dialog__panel {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  @starting-style {
+    .lead-dialog[open] .lead-dialog__panel {
+      transform: translateY(2rem);
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .lead-dialog {
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .lead-dialog__panel {
+      max-width: 30rem;
+      padding: 2.5rem 2.5rem 2.25rem;
+      border-radius: var(--radius-lg);
+      transform: translateY(1rem) scale(0.98);
+    }
+
+    .lead-dialog[open] .lead-dialog__panel {
+      transform: translateY(0) scale(1);
+    }
+
+    @starting-style {
+      .lead-dialog[open] .lead-dialog__panel {
+        transform: translateY(1rem) scale(0.98);
+        opacity: 0;
+      }
+    }
+  }
+
+  /* --- Trilho fixo -------------------------------------------------------- */
+  .rail-label {
+    writing-mode: vertical-rl;
+    rotate: 180deg;
+  }
+
+  /* --- A Linha: jornada do paciente --------------------------------------- */
+  .journey {
+    --dot: 11px;
+    --hair: 1px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Trilho — desenha de cima para baixo quando a seção entra em tela */
+  .journey::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--dot) / 2 - var(--hair) / 2);
+    top: 8px;
+    bottom: 8px;
+    width: var(--hair);
+    background: color-mix(in oklab, var(--color-brass) 32%, transparent);
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform 1500ms var(--ease-out-expo);
+  }
+
+  [data-shown="true"] .journey::before {
+    transform: scaleY(1);
+  }
+
+  .journey-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--dot) 1fr;
+    gap: 0 1.15rem;
+    align-items: start;
+  }
+
+  .journey-dot {
+    width: var(--dot);
+    height: var(--dot);
+    margin-top: 5px;
+    border: 1px solid var(--color-brass);
+    border-radius: 999px;
+    background-color: var(--color-ink);
+    opacity: 0;
+    scale: 0.3;
+    transition:
+      opacity 380ms var(--ease-out-quint),
+      scale 520ms var(--ease-out-quint),
+      background-color 380ms linear;
+    transition-delay: var(--node-delay, 0ms);
+  }
+
+  [data-shown="true"] .journey-dot {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .journey-body {
+    opacity: 0;
+    translate: 0 10px;
+    transition:
+      opacity 520ms var(--ease-out-quint),
+      translate 620ms var(--ease-out-quint);
+    transition-delay: calc(var(--node-delay, 0ms) + 90ms);
+  }
+
+  [data-shown="true"] .journey-body {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @media (min-width: 1280px) {
+    .journey {
+      flex-direction: row;
+      gap: 0;
+      min-height: 320px;
+      align-items: center;
+    }
+
+    .journey::before {
+      inset: auto 0;
+      top: 50%;
+      width: auto;
+      height: var(--hair);
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    [data-shown="true"] .journey::before {
+      transform: scaleX(1);
+    }
+
+    .journey-step {
+      display: block;
+      flex: 1 1 0;
+      min-height: 320px;
+    }
+
+    .journey-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0;
+      translate: -50% -50%;
+    }
+
+    .journey-body {
+      position: absolute;
+      left: 50%;
+      width: 13rem;
+      translate: -50% 10px;
+    }
+
+    .journey-step:nth-child(odd) .journey-body {
+      bottom: calc(50% + 1.5rem);
+    }
+
+    .journey-step:nth-child(even) .journey-body {
+      top: calc(50% + 1.5rem);
+    }
+
+    [data-shown="true"] .journey-body {
+      translate: -50% 0;
+    }
+
+    .journey-step:first-child .journey-body {
+      left: 0;
+      translate: 0 10px;
+    }
+
+    .journey-step:last-child .journey-body {
+      left: auto;
+      right: 0;
+      translate: 0 10px;
+    }
+
+    [data-shown="true"] .journey-step:first-child .journey-body,
+    [data-shown="true"] .journey-step:last-child .journey-body {
+      translate: 0 0;
+    }
+  }
+
+
+  /* --- FAQ ---------------------------------------------------------------- */
+  .faq-item summary::marker {
+    content: "";
+  }
+
+  @supports selector(::details-content) {
+    .faq-item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition:
+        block-size 420ms var(--ease-out-quint),
+        content-visibility 420ms allow-discrete;
+      transition-behavior: allow-discrete;
+    }
+
+    .faq-item[open]::details-content {
+      block-size: auto;
+    }
+  }
+
+
+  /* --- Documentos legais --------------------------------------------------- */
+  .legal-body :where(h2) {
+    margin-top: 2.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-rule);
+    font-size: 1.0625rem;
+    font-weight: 620;
+    letter-spacing: -0.01em;
+    color: var(--color-graphite);
+  }
+
+  .legal-body :where(h2):first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .legal-body :where(p, ul) {
+    font-family: var(--font-prose);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-graphite-soft);
+    margin-top: 1rem;
+  }
+
+  .legal-body :where(ul) {
+    padding-left: 1.1rem;
+    list-style: none;
+  }
+
+  .legal-body :where(li) {
+    position: relative;
+    margin-top: 0.6rem;
+  }
+
+  .legal-body :where(li)::before {
+    content: "";
+    position: absolute;
+    left: -1.1rem;
+    top: 0.72em;
+    width: 0.5rem;
+    height: 1px;
+    background-color: var(--color-brass-deep);
+  }
+
+  .legal-body :where(strong) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-graphite);
+  }
+
+  .legal-pending {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding: 1rem 1.15rem;
+    border: 1px dashed color-mix(in oklab, var(--color-brass) 55%, transparent);
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in oklab, var(--color-brass) 6%, transparent);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-graphite);
+  }
+
+
+  /* --- Retratos de depoimento ---------------------------------------------
+     Os stills chegam de gravações diferentes: fundos, luz e enquadramento não
+     combinam entre si. Um duotone (cinza + tinta verde) transforma nove fontes
+     desencontradas em um conjunto só. A cor volta no hover, lembrando que são
+     pessoas reais, não ilustração.
+     ---------------------------------------------------------------------- */
+  .portrait-media {
+    filter: grayscale(1) contrast(1.06) brightness(0.96);
+    transition: filter 700ms var(--ease-out-quint), transform 700ms var(--ease-out-quint);
+  }
+
+  .portrait-tint {
+    background-color: color-mix(in oklab, var(--color-forest) 62%, transparent);
+    mix-blend-mode: color;
+    opacity: 1;
+    transition: opacity 700ms var(--ease-out-quint);
+  }
+
+  .portrait:hover .portrait-media,
+  .portrait:focus-within .portrait-media {
+    filter: grayscale(0) contrast(1) brightness(1);
+    transform: scale(1.035);
+  }
+
+  .portrait:hover .portrait-tint,
+  .portrait:focus-within .portrait-tint {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portrait:hover .portrait-media,
+    .portrait:focus-within .portrait-media {
+      transform: none;
+    }
+  }
+
+
+  /* --- Revelação por rolagem --------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 700ms var(--ease-out-quint),
+      transform 700ms var(--ease-out-quint);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-shown="true"] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@layer utilities {
+  .stack-gap {
+    padding-block: clamp(4.5rem, 3rem + 7vw, 9rem);
+  }
+
+  .stack-gap-tight {
+    padding-block: clamp(3rem, 2.2rem + 4vw, 5.5rem);
+  }
+
+  /* Área segura para o CTA fixo no mobile */
+  .safe-b {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* --- Preferência por menos movimento ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

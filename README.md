@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Operação Linha de Frente
 
-## Getting Started
+Landing page do programa **Operação Linha de Frente**, da DocFounder.
 
-First, run the development server:
+> **Fase atual: frontend.** A página está completa e navegável, incluindo o modal
+> de captura funcional. Stripe, banco de dados e webhooks ficaram para a próxima
+> fase, por definição do cliente. Ver [ARCHITECTURE.md](./ARCHITECTURE.md).
+
+## Rodar localmente
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Em `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Comandos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comando | O que faz |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Build de produção |
+| `npm start` | Serve o build |
+| `npm run typecheck` | TypeScript em modo strict |
+| `npm run lint` | ESLint |
+| `npm test` | Testes unitários (Vitest) |
+| `npm run check` | Typecheck + lint + testes + build |
 
-## Learn More
+## Documentação
 
-To learn more about Next.js, take a look at the following resources:
+| Arquivo | Conteúdo |
+|---|---|
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | Stack, decisões, trade-offs, o que falta |
+| [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) | Conceito, cor, tipografia, motion, componentes |
+| [ASSET_MANIFEST.md](./ASSET_MANIFEST.md) | Assets em uso, pendências, validações que bloqueiam publicação |
+| [COPY_NOTES.md](./COPY_NOTES.md) | Todo texto criado além da copy oficial, e sugestões não aplicadas |
+| [SECURITY.md](./SECURITY.md) | Cabeçalhos, dados pessoais, contrato para o backend |
+| [SEO.md](./SEO.md) | Metadata, dados estruturados, Core Web Vitals |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Como mudar as coisas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Copy
 
-## Deploy on Vercel
+`src/config/content.ts`. Nenhum texto vive dentro de componente.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Preço
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`src/config/offer.ts`.
+
+```ts
+currentPrice: 497,
+originalPrice: 997,
+```
+
+Isso é **apresentação**. Quando o Stripe entrar, o valor cobrado vem do Price ID
+no servidor — o browser nunca informa preço.
+
+### Vídeo da VSL
+
+```bash
+NEXT_PUBLIC_VSL_SRC=https://sua-cdn/vsl.m3u8
+NEXT_PUBLIC_VSL_POSTER=https://sua-cdn/poster.jpg
+```
+
+Sem essas variáveis, o quadro mostra "Vídeo em breve" com o espaço já reservado —
+nenhum layout shift quando o vídeo chegar.
+
+### Garantia
+
+Ainda não confirmada pelo cliente, então **nada é publicado**. Quando confirmar:
+
+```ts
+guarantee: { enabled: true, days: 7, copy: "..." }
+```
+
+### Certificado MEC
+
+A copy oficial afirma validação MEC. A alegação depende de comprovação
+documental. Para tirar do ar sem tocar em componente:
+
+```ts
+claims: { mecCertificate: false }
+```
+
+Some da seção "O que vem incluso", do FAQ e do JSON-LD de uma vez.
+
+### Prazo da oferta
+
+Sem data confirmada, a página diz "por tempo limitado" e **não exibe contador**.
+Havendo data real, preencha `offer.endsAt`.
+
+### WhatsApp
+
+```bash
+NEXT_PUBLIC_WHATSAPP_URL=https://wa.me/55...
+```
+
+Sem essa variável, o CTA de compra para equipe no FAQ não é renderizado.
+
+### Depoimentos
+
+`src/config/testimonials.ts`. Preencha `videoSrc` quando os arquivos chegarem.
+
+### Analytics
+
+Registre um destino uma vez, em qualquer client component do topo da árvore:
+
+```ts
+import { registerDestination } from "@/lib/analytics";
+
+registerDestination({
+  name: "ga4",
+  track: (event, properties) => window.gtag?.("event", event, properties),
+});
+```
+
+Nenhum componente precisa mudar. Eventos disparados antes do registro ficam em
+fila e são entregues depois.
+
+## Deploy
+
+Vercel. Configure `NEXT_PUBLIC_SITE_URL` com o domínio final antes do primeiro
+build — canonical, Open Graph e sitemap dependem dele.
+
+Os cabeçalhos de segurança vêm de `next.config.ts` e não precisam de configuração
+na plataforma.
