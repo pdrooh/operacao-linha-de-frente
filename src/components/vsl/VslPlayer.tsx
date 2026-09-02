@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { content } from "@/config/content";
 import { vsl } from "@/config/vsl";
 import { analytics } from "@/lib/analytics";
+import { attachSource } from "@/lib/video/attach-source";
 
 /**
  * Player da VSL.
@@ -60,6 +61,25 @@ export function VslPlayer() {
     }
   }, []);
 
+  /* Liga MP4 ou HLS conforme a URL, sem que o componente precise saber qual. */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !vsl.src) return;
+
+    let detach: (() => void) | undefined;
+    let cancelled = false;
+
+    void attachSource(video, vsl.src).then((fn) => {
+      if (cancelled) fn();
+      else detach = fn;
+    });
+
+    return () => {
+      cancelled = true;
+      detach?.();
+    };
+  }, []);
+
   const play = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -92,7 +112,6 @@ export function VslPlayer() {
             onEnded={() => analytics.track("vsl_complete", {})}
             title={vsl.title}
           >
-            <source src={vsl.src} />
             {vsl.captions ? (
               <track kind="captions" srcLang="pt-BR" label="Português" src={vsl.captions} default />
             ) : null}

@@ -743,6 +743,76 @@
   }
 
 
+  /* --- Lightbox de depoimento --------------------------------------------- */
+  .media-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 1rem;
+    border: none;
+    background: transparent;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .media-dialog:not([open]) {
+    display: none;
+  }
+
+  .media-dialog::backdrop {
+    background-color: oklch(13% 0.02 168 / 0.88);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-out-quint);
+  }
+
+  .media-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .media-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .media-dialog__panel {
+    /* Os arquivos chegam em proporções diferentes (vertical, quadrado). A
+       largura é fixa e a altura sai da proporção real de cada vídeo, então
+       nenhum deles é cortado nem ganha tarja. */
+    width: min(100%, 26rem);
+    opacity: 0;
+    scale: 0.97;
+    transition:
+      opacity 260ms var(--ease-out-quint),
+      scale 380ms var(--ease-out-expo);
+  }
+
+  .media-dialog__panel video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(100dvh - 9rem);
+    object-fit: contain;
+  }
+
+  .media-dialog[open] .media-dialog__panel {
+    opacity: 1;
+    scale: 1;
+  }
+
+  @starting-style {
+    .media-dialog[open] .media-dialog__panel {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+
+
   /* --- Revelação por rolagem --------------------------------------------- */
   .reveal {
     opacity: 0;
