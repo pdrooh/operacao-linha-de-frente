@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import { Reveal } from "@/components/layout/Reveal";
 import { Section } from "@/components/layout/Section";
 import { CtaButton } from "@/components/ui/CtaButton";
@@ -23,16 +25,25 @@ export function Details() {
             <h2 className="t-h2 text-bone">{details.title}</h2>
           </Reveal>
 
-          <dl className="mt-10 grid gap-0 border-t border-[color-mix(in_oklab,var(--color-brass)_22%,transparent)]">
-            {linhas.map((linha, index) => (
-              <Reveal key={linha.rotulo} delay={index * 70}>
-                <div className="flex items-baseline justify-between gap-6 border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4">
-                  <dt className="t-label shrink-0 text-bone/55">{linha.rotulo}</dt>
-                  <dd className="tnum m-0 text-right text-[1.0625rem] font-medium text-bone">{linha.valor}</dd>
-                </div>
-              </Reveal>
-            ))}
-          </dl>
+          {/*
+            A revelação passou para o `dl` inteiro. Por linha, ela exigia um
+            `div` de embrulho que, somado ao do layout, deixava `dt` e `dd` a
+            duas camadas do `dl` e quebrava a lista de definição.
+          */}
+          <Reveal delay={80}>
+            <dl className="mt-10 grid grid-cols-[auto_1fr] border-t border-[color-mix(in_oklab,var(--color-brass)_22%,transparent)]">
+              {linhas.map((linha) => (
+                <Fragment key={linha.rotulo}>
+                  <dt className="t-label flex items-center border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4 pr-6 text-bone/55">
+                    {linha.rotulo}
+                  </dt>
+                  <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4 text-[1.0625rem] font-medium text-bone">
+                    {linha.valor}
+                  </dd>
+                </Fragment>
+              ))}
+            </dl>
+          </Reveal>
 
           <Reveal delay={300}>
             <p className="t-label mt-12 text-brass">{details.includedLabel}</p>

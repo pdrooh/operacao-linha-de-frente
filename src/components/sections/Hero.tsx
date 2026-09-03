@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Fragment } from "react";
 
 import { Reveal } from "@/components/layout/Reveal";
 import { CtaButton } from "@/components/ui/CtaButton";
@@ -65,16 +66,25 @@ function EventFacts() {
     { rotulo: "Investimento", valor: formatPrice() },
   ];
 
+  /*
+    `dt` e `dd` são filhos diretos do `dl`: a grade de duas colunas faz o
+    alinhamento que antes vinha de um `div` por linha. Envolver os pares em
+    `div` é tolerado pela regra de lista de definição só até uma camada, e
+    custava a semântica sem dar nada em troca.
+  */
   return (
-    <dl className="mt-9 grid gap-0 border-t border-[color-mix(in_oklab,var(--color-brass)_22%,transparent)] sm:max-w-[30rem]">
+    <dl className="mt-9 grid grid-cols-[auto_1fr] border-t border-[color-mix(in_oklab,var(--color-brass)_22%,transparent)] sm:max-w-[30rem]">
       {linhas.map((linha) => (
-        <div
-          key={linha.rotulo}
-          className="flex items-baseline justify-between gap-6 border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3"
-        >
-          <dt className="t-label shrink-0 text-bone/50">{linha.rotulo}</dt>
-          <dd className="tnum m-0 text-right text-[0.9375rem] font-medium text-bone">{linha.valor}</dd>
-        </div>
+        <Fragment key={linha.rotulo}>
+          {/* Sem vão entre as colunas e com as células esticadas: as duas
+              bordas se encostam e formam uma régua contínua. */}
+          <dt className="t-label flex items-center border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3 pr-6 text-bone/50">
+            {linha.rotulo}
+          </dt>
+          <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3 text-[0.9375rem] font-medium text-bone">
+            {linha.valor}
+          </dd>
+        </Fragment>
       ))}
     </dl>
   );

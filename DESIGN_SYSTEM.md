@@ -127,3 +127,30 @@ liga cada seção ao trilho.
 - Consentimento de marketing separado e nunca pré-marcado.
 - Link "Ir para o conteúdo" como primeiro elemento focável.
 - Foco visível em tudo, com cor ajustada por superfície.
+
+## Listas de definição
+
+Pares de rótulo e valor (data, horário, local, vagas, investimento) usam `<dl>`.
+
+**`<dt>` e `<dd>` são filhos diretos do `<dl>`.** A regra `definition-list` do axe
+tolera uma camada de `<div>` entre eles, mas não duas — e foi exatamente isso que
+quebrou quando cada linha ganhou um `<div>` de layout somado ao `<div>` do
+componente `Reveal`. Se precisar de revelação por rolagem, envolva o `<dl>`
+inteiro, nunca cada par.
+
+O alinhamento em duas colunas vem da grade, não de wrappers:
+
+```
+dl   → grid grid-cols-[auto_1fr]   (sem gap entre colunas)
+dt   → flex items-center  border-b  pr-6
+dd   → flex items-center justify-end  border-b  m-0
+```
+
+Duas exigências dessa combinação, ambas verificáveis:
+
+1. **Sem `gap-x`.** As bordas inferiores de `dt` e `dd` precisam se encostar,
+   senão a régua aparece partida em dois segmentos.
+2. **Sem `items-baseline` no `dl`.** Com baseline as células encolhem para o
+   próprio conteúdo e, como rótulo e valor têm tamanhos diferentes, as duas
+   bordas ficam em alturas distintas. Esticadas (padrão da grade), coincidem; o
+   `items-center` de cada célula cuida do alinhamento vertical do texto.
