@@ -1,3 +1,4 @@
+import { FactBar } from "@/components/layout/FactBar";
 import { FrontLineRail } from "@/components/layout/FrontLineRail";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Audience } from "@/components/sections/Audience";
@@ -37,6 +38,7 @@ export default function LandingPage() {
       */}
       <main id="conteudo">
         <Hero />
+        <FactBar />
         <Problem />
         <Role />
         <Journey />

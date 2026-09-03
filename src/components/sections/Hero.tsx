@@ -27,7 +27,10 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={70}>
-              <h1 className="t-display mt-5 text-bone sm:mt-6">{hero.title}</h1>
+              <h1 className="t-display mt-5 text-bone sm:mt-6">
+                {hero.titleLead}
+                <span className="em">{hero.titleEm}</span>
+              </h1>
             </Reveal>
 
             <Reveal delay={140}>

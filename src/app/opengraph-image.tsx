@@ -60,7 +60,7 @@ export default async function OpenGraphImage() {
               maxWidth: 940,
             }}
           >
-            {content.hero.title}
+            {`${content.hero.titleLead} ${content.hero.titleEm}`}
           </div>
           <div
             style={{

@@ -7,6 +7,14 @@ import { Logo } from "@/components/ui/Logo";
 import { content } from "@/config/content";
 import { cn } from "@/lib/utils/cn";
 
+const LINKS = [
+  { href: "#mecanismo", rotulo: "Método" },
+  { href: "#transformacao", rotulo: "O que muda" },
+  { href: "#prova", rotulo: "Depoimentos" },
+  { href: "#thiago-moura", rotulo: "Quem conduz" },
+  { href: "#detalhes", rotulo: "Detalhes" },
+];
+
 export function SiteHeader() {
   const [condensed, setCondensed] = useState(false);
 
@@ -45,12 +53,23 @@ export function SiteHeader() {
           <a href="#topo" className="-my-2 flex min-h-[44px] items-center py-2" aria-label="Início">
             <Logo tone="light" width={116} priority />
           </a>
-          <span
-            aria-hidden="true"
-            className="hidden h-4 w-px bg-[color-mix(in_oklab,var(--color-brass)_40%,transparent)] sm:block"
-          />
-          <p className="t-label hidden text-bone/55 sm:block">Operação Linha de Frente</p>
         </div>
+
+        {/* Âncoras para as seções que decidem: método, prova, quem conduz, preço. */}
+        <nav aria-label="Seções da página" className="hidden xl:block">
+          <ul className="flex list-none items-center gap-7">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="t-label text-bone/60 transition-colors hover:text-brass"
+                >
+                  {link.rotulo}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <CtaButton
           location="header"

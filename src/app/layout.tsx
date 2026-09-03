@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Literata } from "next/font/google";
+import { Archivo, Bodoni_Moda } from "next/font/google";
 
 import { AnalyticsBoot } from "@/components/layout/AnalyticsBoot";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -10,10 +10,13 @@ import { site } from "@/config/site";
 import "./globals.css";
 
 /**
- * Archivo: grotesca de sinalização — títulos, rótulos, números e interface.
- * Literata: serifada de leitura — parágrafos narrativos.
- * Só os pesos realmente usados são carregados, e o next/font os auto-hospeda:
- * nenhuma requisição sai para o Google.
+ * Bodoni Moda: serifada de alto contraste — só títulos, em corpo grande, onde a
+ * modulação fina do traço aparece. Variável, com eixo de tamanho óptico.
+ * Archivo: grotesca de sinalização — corpo de texto, rótulos, números e interface.
+ *
+ * Duas famílias com papéis que não se sobrepõem. Só os pesos realmente usados
+ * são carregados, e o next/font os auto-hospeda: nenhuma requisição sai para o
+ * Google.
  */
 const archivo = Archivo({
   subsets: ["latin"],
@@ -22,10 +25,10 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const literata = Literata({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-literata",
+  weight: ["400", "500", "600"],
+  variable: "--font-bodoni",
   display: "swap",
 });
 
@@ -70,7 +73,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${archivo.variable} ${literata.variable}`}>
+    <html lang="pt-BR" className={`${archivo.variable} ${bodoni.variable}`}>
       <body>
         <a
           href="#conteudo"

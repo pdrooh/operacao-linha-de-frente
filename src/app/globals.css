@@ -34,8 +34,9 @@
   --color-alert: oklch(56% 0.150 28);
 
   /* --- Tipografia --- */
+  /* Serifada só para título; grotesca para todo o resto. */
+  --font-serif: var(--font-bodoni), ui-serif, Georgia, serif;
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-prose: var(--font-literata), ui-serif, Georgia, serif;
 
   /* --- Raios --- */
   --radius-xs: 2px;
@@ -94,9 +95,10 @@
   }
 
   :where(h1, h2, h3, h4) {
-    font-weight: 620;
-    letter-spacing: -0.028em;
-    line-height: 1.02;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    line-height: 1.06;
     text-wrap: balance;
   }
 
@@ -156,24 +158,27 @@
 
   /* --- Escala tipográfica ----------------------------------------------- */
   .t-display {
-    font-size: clamp(2.05rem, 1.45rem + 2.6vw, 3.45rem);
-    line-height: 1.03;
-    letter-spacing: -0.035em;
-    font-weight: 640;
+    font-family: var(--font-serif);
+    font-size: clamp(2.35rem, 1.5rem + 3.4vw, 4.15rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    font-weight: 400;
   }
 
   .t-h2 {
-    font-size: clamp(1.95rem, 1.25rem + 2.9vw, 3.4rem);
-    line-height: 1.02;
-    letter-spacing: -0.032em;
-    font-weight: 620;
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 1.25rem + 2.3vw, 2.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    font-weight: 500;
   }
 
   .t-h3 {
-    font-size: clamp(1.3rem, 1.08rem + 0.95vw, 1.85rem);
-    line-height: 1.14;
-    letter-spacing: -0.022em;
-    font-weight: 600;
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 1.05rem + 0.85vw, 1.7rem);
+    line-height: 1.2;
+    letter-spacing: -0.008em;
+    font-weight: 500;
   }
 
   .t-lead {
@@ -183,10 +188,10 @@
   }
 
   .t-body {
-    font-family: var(--font-prose);
-    font-size: clamp(1.0625rem, 1.01rem + 0.24vw, 1.1875rem);
-    line-height: 1.66;
-    letter-spacing: -0.002em;
+    font-size: clamp(1rem, 0.97rem + 0.16vw, 1.0938rem);
+    line-height: 1.6;
+    letter-spacing: -0.006em;
+    font-weight: 400;
     max-width: var(--measure-prose);
   }
 
@@ -207,6 +212,13 @@
   /* Texto claro sobre fundo escuro precisa de mais ar */
   .surface-deep :where(.t-body) {
     line-height: 1.74;
+  }
+
+  /* Segunda linha do título em latão: a marca se lê em dois tempos. */
+  .t-display .em,
+  .t-h2 .em {
+    display: block;
+    color: var(--color-brass);
   }
 
   /* --- Superfícies ------------------------------------------------------- */
@@ -659,7 +671,6 @@
   }
 
   .legal-body :where(p, ul) {
-    font-family: var(--font-prose);
     font-size: 1rem;
     line-height: 1.7;
     color: var(--color-graphite-soft);

@@ -14,7 +14,9 @@ export const content = {
   hero: {
     // auxiliar — etiqueta de contexto
     eyebrow: "Imersão presencial · São Paulo",
-    title: "Operação Linha de Frente",
+    /* `titleLead` sai em osso, `titleEm` em latão: a marca se lê em dois tempos. */
+    titleLead: "Operação",
+    titleEm: "Linha de Frente",
     subtitle:
       "Imersão presencial para secretárias que querem transformar o atendimento em um diferencial para a clínica.",
     cta: "Quero garantir minha vaga",
