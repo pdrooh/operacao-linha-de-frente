@@ -1,71 +1,69 @@
-# COPY_NOTES
+# Notas de copy
 
-A copy do documento oficial foi reproduzida sem alteração de conteúdo. Este
-arquivo registra **tudo que foi escrito por fora dela**, para aprovação.
+Registro do que é copy oficial do cliente e do que foi criado para dar estrutura
+visual. A regra do projeto está no [CLAUDE.md](./CLAUDE.md): copy oficial não se
+altera; sugestão de mudança vira uma entrada aqui, não um commit silencioso.
 
-## Texto auxiliar criado (marcado como `// auxiliar` em `src/config/content.ts`)
+## Origem
 
-| Onde | Texto | Justificativa |
+Documento oficial: `OPERAÇÃO LINHA DE FRENTE.pdf`, entregue pelo cliente em
+03/09/2026. Substituiu integralmente a copy anterior.
+
+## Mudança de produto (03/09/2026)
+
+A copy anterior descrevia um **curso online** — 31 aulas, 7 módulos, R$497 com
+âncora de R$997, certificado MEC, três bônus. A nova descreve uma **imersão
+presencial de um dia**. As duas não são versões do mesmo texto: são produtos
+diferentes.
+
+| | Antes | Agora |
 |---|---|---|
-| Hero | "31 aulas · 7 módulos · Materiais de apoio · Acesso imediato" | Resumo do que a seção 6 já declara. Antecipa o conteúdo na dobra. |
-| VSL | "Assista antes de decidir" · "Vídeo em breve" · "A apresentação do programa será publicada aqui." | Rótulo do player e estado de espera. |
-| Problema | "A conversa que você nunca vê" / "Ilustração" / as três mensagens / "2h28 depois" / "Ninguém errou. Ninguém explicou o valor. O paciente foi embora." | Encenação literal do exemplo da própria copy ("uma resposta seca no WhatsApp"). Marcada como **Ilustração** no próprio componente. |
-| Mecanismo | "Improviso" → "Processo" | Estrutura visual definida no PRD, seção 46. |
-| Jornada | "A jornada do paciente, ponto a ponto" + as 7 legendas de estação | Estrutura definida no PRD, seção 17. Cada legenda deriva de um item da seção 5 da copy. |
-| Prova | "Depoimentos em vídeo destes profissionais serão publicados aqui assim que os arquivos forem disponibilizados." | Nota honesta enquanto os vídeos não chegam. |
-| Programa | Os detalhes de cada item ("Aproximadamente 50 minutos cada", etc.) | Derivados do FAQ e da seção 5. |
-| Oferta | "Acesso imediato após a confirmação do pagamento." | Reafirma o item "Acesso imediato" da seção 6. |
-| Modal | "Preencha seus dados para continuar. Leva menos de um minuto." + rótulos e mensagens de erro | Interface. |
-| Páginas legais | Política de Privacidade e Termos | Redigidos a partir do que a página de fato coleta. Todo dado do controlador está marcado como pendente. |
+| Formato | Curso online gravado | Imersão presencial, 1 dia |
+| Quando | Acesso imediato | 10/10/2026, das 8h às 20h |
+| Onde | — | Pullman Hotel, São Paulo — SP |
+| Preço | R$497 (de R$997) | R$997, sem âncora |
+| Vagas | Ilimitadas | 40 |
+| Certificado | "Certificado MEC" | "Certificado de participação" |
+| Bônus | 3 bônus | "Sem bônus de antecipação nesta turma" |
+| Interlocutor | O médico ("sua secretária") | A secretária ("você") |
+| CTA | "Quero conhecer o programa" | "Quero garantir minha vaga" |
 
-## Normalização tipográfica
+Consequências no código, todas aplicadas:
 
-Uma única alteração de pontuação foi aplicada à copy oficial, sem mudar palavra:
+- A alegação de certificado MEC **saiu inteiramente**, junto com o flag
+  `offer.claims` que a controlava. A copy nova não faz essa alegação.
+- Seções de bônus e de preço com desconto foram removidas.
+- A VSL saiu: a copy nova não menciona vídeo de apresentação. O player e o
+  `src/config/vsl.ts` foram removidos; o helper `attachSource` permanece,
+  porque os depoimentos o usam e ele aceita MP4 e HLS.
+- O JSON-LD passou de `Course` para `EducationEvent`, com data, local e
+  capacidade da turma.
 
-| Original | Publicado |
-|---|---|
-| "dá esse processo pronto **-** para sua secretária" | "dá esse processo pronto **—** para sua secretária" |
+## Texto auxiliar
 
-O hífen solto vira travessão, que é a pontuação correta para aposto explicativo.
-Se o cliente preferir manter o hífen, é uma linha em `content.journey.lead`.
+Criado para estrutura visual, sem equivalente no documento oficial. Sujeito a
+aprovação do cliente:
 
-## Legendas das estações — origem
-
-| Estação | Legenda | Deriva de |
+| Onde | Texto | Função |
 |---|---|---|
-| Primeiro contato | "O paciente chega. Sua clínica é julgada antes de qualquer consulta." | Seção 2 |
-| WhatsApp | "A resposta que decide se ele continua ou procura outro lugar." | Seção 2 |
-| Atendimento | "Acolhimento com a cultura que você construiu, sem improviso." | Seção 5, item 1 |
-| Agendamento | "Do primeiro 'oi' até o horário marcado, sem paciente escapando." | Seção 5, itens 2 e 3 |
-| Confirmação | "Rotina organizada com apoio de CRM e IA." | Seção 5, item 2 |
-| Conversão | "Venda consultiva conduzida com técnica, objeções contornadas com método." | Seção 5, itens 4 e 5 |
-| Fidelização | "Indicadores que mostram, com dados, onde a clínica ganha ou perde pacientes." | Seção 5, item 7 |
+| Hero | "Imersão presencial · São Paulo" | Etiqueta de contexto acima do título |
+| Hero e Detalhes | Rótulos "Data", "Horário", "Local", "Vagas", "Investimento" | Nomeiam os dados que a copy traz em linha corrida |
+| Seu papel | "No improviso" / "Com método" | Rótulos do contraste que a copy descreve em prosa |
+| Mecanismo | "A jornada do paciente, ponto a ponto" | Introduz a linha de sete estações |
+| Mecanismo | Legendas das sete estações | Derivadas da copy (WhatsApp, telefone, recepção, agendamento, objeções, acompanhamento) |
+| Detalhes | "Turma de 40 vagas · 10 de outubro de 2026" | Reforço abaixo do CTA, repete dados já declarados |
+| Modal | "Preencha seus dados para continuar. Leva menos de um minuto." | Orientação de preenchimento |
+| Rótulos de estação | Números e nomes de cada seção no trilho | Gramática visual da Linha |
 
-## COPY SUGGESTION — não aplicadas
+## Alegações que dependem do cliente
 
-Sugestões que **não** foram implementadas, porque alterar a copy é decisão do cliente:
+- **"+20 clínicas assessoradas", "+200 secretárias e recepcionistas treinadas",
+  "Mais de 10 anos"** — credenciais de Thiago Moura declaradas na copy oficial.
+  Publicadas como recebidas. Se forem números estimados, convém revisar antes da
+  campanha.
+- **Garantia** — continua sem menção na copy. `offer.guarantee.enabled` segue
+  `false`; nada sobre garantia é publicado.
 
-1. **Headline do hero.** "Sua secretária pode estar afastando pacientes da sua
-   clínica e você nem sabe" tem 76 caracteres e ocupa 3 linhas no desktop, 5 no
-   mobile. Uma versão de ~55 caracteres ganharia impacto na dobra. Exemplo:
-   *"Sua secretária pode estar afastando pacientes — e você nem sabe."*
+## COPY SUGGESTION
 
-2. **Seção 9 (autoridade).** A frase atual é factual mas genérica. Se a DocFounder
-   puder liberar números auditáveis (clínicas atendidas, tempo de operação), esta
-   é a seção mais fraca da página e a que mais ganharia.
-
-3. **Seção 10 (oferta).** "Por tempo limitado" sem prazo tem força limitada.
-   Havendo data real, `offer.endsAt` já está preparado.
-
-4. **Seção 3 (prova).** "Clínicas que já estruturaram o atendimento com esse
-   método" promete depoimento. Sem os vídeos, a seção entrega menos do que a
-   headline anuncia. Prioridade alta na entrega de material.
-
-## Alegações que exigem validação antes de publicar
-
-- **"Certificado MEC, reconhecido oficialmente"** (seção 6 e FAQ). Está no ar
-  hoje porque é copy oficial do cliente, mas depende de comprovação documental.
-  Desligue em `offer.claims.mecCertificate` e o item some de todos os lugares.
-- **Garantia de satisfação.** O briefing traz "(ex: 7 dias)?". **Não foi
-  publicada nada** sobre garantia. Os Termos citam apenas o direito legal de
-  arrependimento do art. 49 do CDC.
+Nenhuma pendente.

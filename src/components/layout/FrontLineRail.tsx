@@ -16,7 +16,7 @@ import { content } from "@/config/content";
  * roda no compositor e não provoca layout.
  */
 
-const stages = content.journey.stages;
+const stages = content.mechanism.stages;
 
 export function FrontLineRail() {
   const railRef = useRef<HTMLDivElement>(null);

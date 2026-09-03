@@ -47,8 +47,8 @@ export function StickyCta() {
     >
       <div className="flex items-center gap-3">
         <p className="tnum shrink-0 whitespace-nowrap text-[0.8125rem] leading-tight text-bone/70">
-          <span className="block font-semibold text-bone">{formatPrice(offer.currentPrice)}</span>
-          <span className="line-through">{formatPrice(offer.originalPrice)}</span>
+          <span className="block font-semibold text-bone">{formatPrice()}</span>
+          <span>{offer.seats} vagas</span>
         </p>
         <button
           type="button"

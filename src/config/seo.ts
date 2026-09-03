@@ -1,17 +1,20 @@
+import { offer } from "./offer";
 import { site } from "./site";
 
+const { event, seats } = offer;
+
 export const seo = {
-  title: "Operação Linha de Frente | Treinamento de recepção para clínicas — DocFounder",
+  title: `Operação Linha de Frente | Imersão presencial para secretárias de clínicas — ${event.city}`,
   shortTitle: "Operação Linha de Frente",
-  description:
-    "Sua secretária pode estar afastando pacientes da sua clínica e você nem sabe. 31 aulas em 7 módulos para transformar a recepção num diferencial. Um programa DocFounder.",
+  description: `Imersão presencial para secretárias que querem transformar o atendimento em um diferencial para a clínica. ${event.dateLabel}, ${event.venue}, ${event.city}. Apenas ${seats} vagas. Com Thiago Moura.`,
   keywords: [
-    "treinamento para secretária de clínica",
-    "atendimento em clínicas médicas",
-    "recepção de clínica",
+    "imersão para secretárias de clínica",
+    "treinamento de recepção médica",
+    "atendimento em clínicas",
+    "curso presencial secretária de clínica",
+    "Thiago Moura",
     "DocFounder",
-    "Operação Linha de Frente",
   ],
-  ogAlt: "Operação Linha de Frente — programa DocFounder para a recepção da sua clínica",
+  ogAlt: `Operação Linha de Frente — imersão presencial em ${event.city}, ${event.dateLabel}`,
   canonical: site.url,
 } as const;

@@ -2,154 +2,165 @@
  * Toda a copy da landing page vive aqui.
  *
  * Regra do projeto: nada é inventado. O texto abaixo reproduz o documento de
- * copy oficial da DocFounder. Textos auxiliares criados para dar estrutura
- * visual (legendas das estações da Linha, rótulos de seção) estão marcados com
- * `// auxiliar` e listados em COPY_NOTES.md para aprovação do cliente.
+ * copy oficial da DocFounder para a imersão presencial de 10/10/2026. Textos
+ * auxiliares criados para dar estrutura visual estão marcados com `// auxiliar`
+ * e listados em COPY_NOTES.md para aprovação do cliente.
+ *
+ * A página fala com a SECRETÁRIA ("você"), com uma única seção endereçada ao
+ * médico ou gestor. Ao editar, mantenha essa voz.
  */
 
 export const content = {
   hero: {
-    eyebrow: "Oportunidade de lançamento",
-    title: "Sua secretária pode estar afastando pacientes da sua clínica e você nem sabe.",
-    subtitle: "Veja como transformar sua recepção num diferencial, não num risco.",
-    cta: "Quero conhecer o programa",
-    // auxiliar — resume o que já está declarado nas seções 5 e 6
-    facts: ["31 aulas", "7 módulos", "Materiais de apoio", "Acesso imediato"],
-  },
-
-  vsl: {
-    // auxiliar — rótulo do player
-    label: "Assista antes de decidir",
-    pendingCopy: "Vídeo em breve",
-    pendingHint: "A apresentação do programa será publicada aqui.",
+    // auxiliar — etiqueta de contexto
+    eyebrow: "Imersão presencial · São Paulo",
+    title: "Operação Linha de Frente",
+    subtitle:
+      "Imersão presencial para secretárias que querem transformar o atendimento em um diferencial para a clínica.",
+    cta: "Quero garantir minha vaga",
   },
 
   problem: {
     station: "Primeiro contato",
-    title: "Você já perdeu um paciente e só descobriu o motivo por acaso?",
-    paragraphs: [
-      "Uma resposta seca no WhatsApp. Uma agenda bagunçada. Um “achei melhor procurar outro lugar” que ninguém explica.",
-      "Você levou anos construindo sua reputação. Mas quem atende primeiro é a sua equipe e isso está acontecendo agora, sem você ver.",
+    title: "Você pode estar perdendo pacientes antes mesmo de eles conhecerem o médico",
+    falhas: [
+      "Uma resposta seca no WhatsApp.",
+      "Uma ligação mal conduzida.",
+      "Uma dúvida que ficou sem resposta.",
+      "Um paciente que some depois do primeiro contato.",
     ],
-    // auxiliar — encenação literal do exemplo citado na copy oficial
-    exchange: {
-      caption: "A conversa que você nunca vê",
-      messages: [
-        { from: "paciente" as const, text: "Oi, bom dia! Vocês atendem qual convênio?", time: "09:12" },
-        { from: "clinica" as const, text: "Não atendemos convênio.", time: "11:40", gapLabel: "2h28 depois" },
-        { from: "paciente" as const, text: "Ah, entendi. Obrigada!", time: "11:41" },
-      ],
-      footnote: "Ninguém errou. Ninguém explicou o valor. O paciente foi embora.",
+    remate: "Muitas vezes, ninguém percebe o motivo.",
+    paragraphs: [
+      "Antes de conhecer o médico ou a estrutura, o paciente conhece a linha de frente da clínica: o atendimento, a recepção, você.",
+      "É nesse primeiro contato que ele decide se confia na clínica ou procura outro lugar.",
+    ],
+  },
+
+  role: {
+    station: "Seu papel",
+    title: "Você não é “apenas a secretária”",
+    paragraphs: [
+      "Você é uma das pessoas mais importantes na experiência do paciente.",
+      "É você quem recebe, acolhe, transmite segurança e organiza a jornada do paciente desde o primeiro “oi” até o agendamento.",
+    ],
+    // O contraste central da página: improviso × método.
+    shift: {
+      from: "Quando esse processo acontece no improviso, você e sua clínica perdem oportunidades.",
+      to: "Quando existe método e estratégia, o atendimento vira diferencial competitivo.",
     },
   },
 
-  journey: {
+  mechanism: {
     station: "O mecanismo",
-    title: "O problema não é a sua equipe. É a falta de um processo.",
-    lead: "A Operação Linha de Frente dá esse processo pronto — para sua secretária parar de improvisar e começar a representar sua clínica com segurança.",
-    // auxiliar — estrutura visual definida no PRD (seção 17)
-    shiftFrom: "Improviso",
-    shiftTo: "Processo",
+    title: "A Operação Linha de Frente nasceu para isso",
+    lead: "Uma imersão presencial para preparar secretárias e profissionais da recepção para atuar com mais segurança, organização e estratégia.",
+    remate:
+      "Atender bem não é só ser simpática. É saber ouvir, conduzir, acolher, responder, organizar e transformar um contato em confiança.",
+    // auxiliar — estrutura visual da jornada (PRD, seção 17)
     stagesLabel: "A jornada do paciente, ponto a ponto",
     stages: [
-      {
-        id: "contato",
-        name: "Primeiro contato",
-        caption: "O paciente chega. Sua clínica é julgada antes de qualquer consulta.",
-      },
-      {
-        id: "whatsapp",
-        name: "WhatsApp",
-        caption: "A resposta que decide se ele continua ou procura outro lugar.",
-      },
-      {
-        id: "atendimento",
-        name: "Atendimento",
-        caption: "Acolhimento com a cultura que você construiu, sem improviso.",
-      },
-      {
-        id: "agendamento",
-        name: "Agendamento",
-        caption: "Do primeiro “oi” até o horário marcado, sem paciente escapando.",
-      },
-      {
-        id: "confirmacao",
-        name: "Confirmação",
-        caption: "Rotina organizada com apoio de CRM e IA.",
-      },
-      {
-        id: "conversao",
-        name: "Conversão",
-        caption: "Venda consultiva conduzida com técnica, objeções contornadas com método.",
-      },
-      {
-        id: "fidelizacao",
-        name: "Fidelização",
-        caption: "Indicadores que mostram, com dados, onde a clínica ganha ou perde pacientes.",
-      },
+      { id: "contato", name: "Primeiro contato", caption: "O paciente chega. Sua clínica é julgada antes de qualquer consulta." },
+      { id: "whatsapp", name: "WhatsApp", caption: "A resposta que decide se ele continua ou procura outro lugar." },
+      { id: "telefone", name: "Telefone", caption: "Uma ligação conduzida com método, não no improviso." },
+      { id: "recepcao", name: "Recepção", caption: "O acolhimento presencial que confirma o que foi prometido." },
+      { id: "agendamento", name: "Agendamento", caption: "Do primeiro “oi” até o horário marcado, sem paciente escapando." },
+      { id: "objecoes", name: "Objeções", caption: "Contornadas sem pressão e sem perder oportunidades." },
+      { id: "acompanhamento", name: "Acompanhamento", caption: "Processos, CRM e tecnologia para não perder o paciente de vista." },
     ],
+  },
+
+  outcomes: {
+    station: "A transformação",
+    title: "O que você vai desenvolver na imersão",
+    lead: "Ao final do dia, você será capaz de:",
+    items: [
+      "Gerar confiança desde o primeiro contato (WhatsApp, telefone e presencial)",
+      "Comunicar com mais segurança e estratégia, sem parecer robótica",
+      "Organizar a rotina com agenda cheia e demandas simultâneas",
+      "Atender de forma consultiva, do primeiro contato ao agendamento",
+      "Lidar com objeções sem pressão e sem perder oportunidades",
+      "Usar processos, CRM e tecnologia para acompanhar pacientes",
+    ],
+    cta: "Quero garantir minha vaga",
+  },
+
+  format: {
+    station: "O formato",
+    title: "Uma imersão, não apenas mais um treinamento",
+    paragraphs: [
+      "Nada de teoria que não vira prática na segunda-feira.",
+      "A Operação Linha de Frente conecta aprendizado com a realidade da rotina de uma clínica.",
+    ],
+    listLabel: "Você sai com:",
+    items: [
+      "Nova visão sobre o seu papel",
+      "Ferramentas práticas para aplicar imediatamente",
+      "Clareza de como seu atendimento impacta a experiência do paciente",
+    ],
+    remate: "Um dia para aprender. Um método para aplicar. Uma nova forma de atuar na linha de frente.",
   },
 
   proof: {
     station: "Prova",
-    title: "Clínicas que já estruturaram o atendimento com esse método:",
-    // auxiliar — nota honesta enquanto os vídeos não são entregues
-    pendingNote:
-      "Depoimentos em vídeo destes profissionais serão publicados aqui assim que os arquivos forem disponibilizados.",
+    title: "O que dizem quem já passou por isso",
   },
 
-  transformation: {
-    station: "A transformação",
-    title: "Depois do treinamento, sua secretária vai:",
+  manager: {
+    station: "Para a gestão",
+    title: "Para o médico ou gestor da clínica",
+    lead: "Se você é médico ou gestor e está avaliando se vale a pena investir R$ 997 na sua secretária, pense assim:",
     items: [
-      "Representar sua clínica com a cultura que você construiu, sem improviso.",
-      "Organizar a rotina e não deixar nenhum paciente escapar, com ajuda de CRM e IA.",
-      "Acolher o paciente do primeiro contato até o agendamento, aumentando a conversão.",
-      "Conduzir a venda com técnica consultiva, do primeiro “oi” ao fechamento.",
-      "Contornar objeções com método, sem perder venda por falta de resposta.",
-      "Manter alta performance mesmo em dias de agenda cheia.",
-      "Acompanhar indicadores para você ver, com dados, onde a clínica ganha ou perde pacientes.",
+      "Quantos pacientes sua clínica perde por mês por falhas no primeiro atendimento?",
+      "Um único paciente de procedimento que não fecha já paga a imersão.",
+      "Melhorar o atendimento na linha de frente aumenta a taxa de agendamento, reduz agenda vazia e melhora a experiência do paciente.",
     ],
-    closing: "31 aulas. 7 módulos. Direto ao ponto.",
+    remate:
+      "A Operação Linha de Frente não é um “curso de secretária”. É um treinamento de operação de clínica, focado onde a maioria das oportunidades se perde: a linha de frente.",
+    cta: "Quero garantir minha vaga para minha secretária",
   },
 
-  program: {
-    station: "O programa",
-    title: "O que vem incluso",
+  host: {
+    station: "Quem conduz",
+    title: "Quem vai te guiar",
+    name: "Thiago Moura",
+    credentials: [
+      "Mais de 10 anos atuando com gestão e operação de clínicas",
+      "+20 clínicas assessoradas",
+      "+200 secretárias e recepcionistas treinadas",
+    ],
+    remate:
+      "Metodologia nascida na prática, dentro da realidade das clínicas, e não apenas em sala de aula.",
+  },
+
+  audience: {
+    station: "Para quem é",
+    title: "Esta imersão é para você que:",
     items: [
-      { label: "31 aulas gravadas", detail: "Aproximadamente 50 minutos cada, no ritmo da sua equipe." },
-      { label: "7 módulos", detail: "Sequência completa, do primeiro contato ao acompanhamento de indicadores." },
-      { label: "Materiais de apoio", detail: "Recursos para aplicar o processo na rotina da clínica." },
-      { label: "Certificado MEC", detail: "Emitido ao final do treinamento.", claim: "mecCertificate" as const },
-      { label: "Acesso imediato", detail: "Liberação assim que a compra é confirmada." },
+      "Trabalha como secretária em uma clínica",
+      "Atua na recepção ou no atendimento ao paciente",
+      "Quer se comunicar com mais segurança",
+      "Deseja se tornar uma profissional mais preparada e valorizada",
+      "Tem dificuldade com pacientes, objeções ou agendas cheias",
+      "Quer organizar melhor sua rotina",
+      "Entende que atendimento também é estratégia",
     ],
+    remate: "Se você está na linha de frente de uma clínica, essa imersão foi feita para você.",
   },
 
-  bonuses: {
-    station: "Bônus",
-    title: "Bônus",
-    // Copy oficial do cliente, sem título auxiliar por cima: o próprio texto é a manchete.
-    items: [
-      { text: "Acesso a uma live de tira-dúvidas com o Thiago Moura." },
-      { text: "Um script/roteiro pronto de atendimento (WhatsApp ou telefone) já usado por outras clínicas." },
-      { text: "Acesso antecipado à comunidade de WhatsApp antes do lançamento oficial." },
+  details: {
+    station: "A imersão",
+    title: "Detalhes da imersão",
+    includedLabel: "O que está incluso",
+    included: [
+      "1 dia de imersão presencial com Thiago Moura",
+      "Curso preparatório online",
+      "Materiais de apoio (scripts, planilhas, checklists)",
+      "Certificado de participação",
+      "Networking com outros profissionais",
     ],
-  },
-
-  authority: {
-    station: "Quem entrega",
-    title: "A Operação Linha de Frente é da DocFounder,",
-    titleRest: "empresa que já acompanha clínicas médicas de perto e sabe exatamente onde o atendimento quebra.",
-  },
-
-  offer: {
-    station: "A oferta",
-    eyebrow: "Lançamento",
-    limitedCopy: "por tempo limitado",
-    originalLabel: "De",
-    cta: "Quero conhecer o programa",
-    // auxiliar — reforço do que está incluso, já declarado na seção 6
-    reassurance: "Acesso imediato após a confirmação do pagamento.",
+    investmentLabel: "Investimento",
+    noBonusNote: "Sem bônus de antecipação nesta turma.",
+    cta: "Quero garantir minha vaga",
   },
 
   faq: {
@@ -157,32 +168,42 @@ export const content = {
     title: "Perguntas frequentes",
     items: [
       {
-        q: "Minha clínica é pequena, o programa funciona mesmo assim?",
-        a: "Sim. O método se aplica a qualquer porte de clínica: o que muda é o volume de pacientes, não o processo de atendimento. Se você tem uma secretária ou uma equipe inteira, o conteúdo funciona do mesmo jeito.",
+        q: "E se minha clínica não quiser pagar?",
+        a: "A sua participação também representa um investimento na sua carreira e no desenvolvimento das suas habilidades. Além disso, você pode apresentar à gestão os benefícios práticos da imersão para o atendimento e para a operação da clínica.",
       },
       {
-        q: "Quanto tempo minha equipe leva para concluir o curso?",
-        a: "São 31 aulas de 50 minutos cada, no próprio ritmo da sua equipe, mas dá pra concluir em poucas semanas com uma dedicação regular.",
+        q: "Sou médico/gestor. Vale a pena pagar para minha secretária?",
+        a: "Sim. Pense em quantos pacientes você perde por falhas no primeiro atendimento. Um único paciente de procedimento que não fecha já paga a imersão, além de melhorar a experiência de todos os pacientes.",
       },
       {
-        q: "Tem suporte durante o treinamento?",
-        a: "Sim. O suporte é feito pelo Thiago Moura e pela equipe DocFounder, prontos para tirar dúvidas ao longo de todo o treinamento.",
-      },
-      {
-        q: "O certificado tem validade oficial?",
-        a: "Sim. O certificado tem validação MEC, reconhecido oficialmente.",
-        claim: "mecCertificate" as const,
-      },
-      {
-        q: "Posso comprar para mais de uma pessoa da equipe?",
-        a: "Sim! Para comprar para mais de uma pessoa da equipe, fale com a gente pelo WhatsApp.",
-        whatsappCta: "Falar pelo WhatsApp",
+        q: "Já fizemos outros treinamentos. O que muda aqui?",
+        a: "Foco total na rotina de clínicas, com exemplos reais de WhatsApp, telefone e recepção. Método prático, para aplicar já na segunda-feira.",
       },
     ],
   },
 
+  scarcity: {
+    station: "Vagas",
+    title: "Vagas limitadas",
+    paragraphs: [
+      "São apenas 40 vagas para garantir dinâmica de grupo e atendimento personalizado.",
+      "Não há bônus de antecipação nesta turma. As vagas seguem até lotar.",
+    ],
+    cta: "Quero garantir minha vaga",
+  },
+
+  closing: {
+    station: "Sua decisão",
+    title: "Sua clínica pode continuar perdendo pacientes no primeiro contato…",
+    subtitle: "…ou você pode preparar sua linha de frente para atuar em outro nível.",
+    paragraph:
+      "Uma secretária preparada não só responde mensagens. Ela acolhe, organiza, conduz, gera confiança e se torna parte fundamental da experiência que faz o paciente escolher permanecer na clínica.",
+    remate: "A sua posição é na linha de frente.",
+    cta: "Quero garantir minha vaga",
+  },
+
   modal: {
-    title: "Quero conhecer o programa",
+    title: "Quero garantir minha vaga",
     // auxiliar — orientação de preenchimento
     lead: "Preencha seus dados para continuar. Leva menos de um minuto.",
     fields: {
@@ -199,7 +220,7 @@ export const content = {
   },
 
   stickyCta: {
-    label: "Quero conhecer o programa",
+    label: "Garantir minha vaga",
   },
 } as const;
 

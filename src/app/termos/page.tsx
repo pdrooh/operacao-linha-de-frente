@@ -22,15 +22,15 @@ export default function TermosPage() {
 
         <h2>1. Objeto</h2>
         <p>
-          Estes termos regem a contratação do programa {site.name}, produto digital de
-          treinamento fornecido pela {site.producer}, composto por 31 aulas gravadas
-          distribuídas em 7 módulos, materiais de apoio e certificado.
+          Estes termos regem a contratação do programa {site.name}, imersão presencial de um dia
+          fornecida pela {site.producer}, realizada em {offer.event.dateLabel}, das 8h às 20h,
+          no {offer.event.venue}, em {offer.event.city} — {offer.event.state}, com turma limitada a{" "}
+          {offer.seats} participantes.
         </p>
 
         <h2>2. Preço e pagamento</h2>
         <p>
-          O valor de lançamento é de {formatPrice(offer.currentPrice)}, ante o valor de{" "}
-          {formatPrice(offer.originalPrice)}, por tempo limitado. O pagamento é processado
+          O investimento é de {formatPrice()}. O pagamento é processado
           por provedor externo; o valor efetivamente cobrado é sempre o exibido na tela de
           checkout do provedor.
         </p>

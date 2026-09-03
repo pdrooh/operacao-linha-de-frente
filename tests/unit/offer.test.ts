@@ -1,11 +1,15 @@
 import { describe, expect, it } from "vitest";
 
-import { formatPrice, offer } from "@/config/offer";
+import { eventSummary, formatPrice, offer } from "@/config/offer";
 
 describe("formatPrice", () => {
   it("formata em real brasileiro sem centavos", () => {
-    expect(formatPrice(497).replace(/ /g, " ")).toBe("R$ 497");
-    expect(formatPrice(997).replace(/ /g, " ")).toBe("R$ 997");
+    // Intl separa "R$" do número com NBSP (U+00A0); normalizamos antes de comparar.
+    expect(formatPrice(997).replace(/\s/g, " ")).toBe("R$ 997");
+  });
+
+  it("usa o preço da oferta quando chamado sem argumento", () => {
+    expect(formatPrice()).toBe(formatPrice(offer.price));
   });
 });
 
@@ -14,7 +18,18 @@ describe("configuração da oferta", () => {
     expect(offer.guarantee.enabled).toBe(false);
   });
 
-  it("não define prazo de oferta, logo nenhum contador é renderizado", () => {
-    expect(offer.endsAt).toBeNull();
+  it("não anuncia bônus de antecipação — a copy declara que não há nesta turma", () => {
+    expect(offer.earlyBirdBonus).toBe(false);
+  });
+
+  it("descreve o evento com data, horário e local", () => {
+    expect(eventSummary()).toContain(offer.event.dateLabel);
+    expect(eventSummary()).toContain(offer.event.venue);
+  });
+
+  it("mantém início antes do fim", () => {
+    expect(new Date(offer.event.startISO).getTime()).toBeLessThan(
+      new Date(offer.event.endISO).getTime(),
+    );
   });
 });

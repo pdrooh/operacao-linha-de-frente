@@ -124,3 +124,32 @@ com recorte central 9:16 para casar com o cartão.
 4. **Qualidade de origem da Dra. Kamilla.** 480×480 a 0,6 Mbps é a menor
    qualidade do conjunto; o poster fica visivelmente mais macio que os demais.
    Se houver arquivo original melhor, vale substituir.
+
+---
+
+## Fotos de Thiago Moura (03/09/2026)
+
+Pasta "Ensaio - fotos" entregue pelo cliente (Drive, acesso público), com três
+subpastas: **Coloridas** (22 arquivos), **Preto e Branco** (22) e **IA** (1).
+Ensaio de estúdio, 4005×6000, fundo cinza-escuro em degradê.
+
+Baixadas 9 coloridas para seleção; duas em uso:
+
+| Arquivo em `public/thiago/` | Origem | Uso | Tratamento |
+|---|---|---|---|
+| `thiago-hero.jpg` (1100×1374, 88 KB) | `Thiago-0034.jpg` | Hero | Recorte 4:5, máscara radial nas bordas e camada de tinta verde em `mix-blend-mode: color` — o fundo do estúdio é cinza neutro e mais claro que o verde-tinta da página, e sem isso aparecia um retângulo colado sobre o fundo |
+| `thiago-retrato.jpg` (900×1124, 64 KB) | `Thiago-0026.jpg` | Seção "Quem vai te guiar" | Recorte 4:5, sem máscara (fica sobre superfície clara) |
+
+As 20 fotos coloridas restantes, as 22 em preto e branco e a imagem da subpasta
+"IA" não foram baixadas. Se a direção de arte pedir outra seleção, os IDs estão
+na pasta original.
+
+### Pendências
+
+1. **Vídeos de depoimento** — permanecem válidos: a copy nova aponta para a
+   mesma pasta do Drive. Os nove estão no Vercel Blob e no ar.
+2. **`WhatsApp Video 2025-08-24 at 00.12.43.mp4`** — segue sem identificação.
+3. **Dra. Tatiana Costa (Geriatria)** — segue sem decisão sobre entrar na página.
+4. **Sem VSL** — a copy nova não menciona vídeo de apresentação. O player foi
+   removido. Se voltar a existir, o helper `src/lib/video/attach-source.ts`
+   continua no projeto e aceita MP4 e HLS.

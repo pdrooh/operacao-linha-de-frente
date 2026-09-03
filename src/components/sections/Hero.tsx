@@ -1,9 +1,12 @@
+import Image from "next/image";
+
 import { Reveal } from "@/components/layout/Reveal";
 import { CtaButton } from "@/components/ui/CtaButton";
-import { VslPlayer } from "@/components/vsl/VslPlayer";
 import { content } from "@/config/content";
+import { formatPrice, offer } from "@/config/offer";
 
 const hero = content.hero;
+const { event, seats } = offer;
 
 export function Hero() {
   return (
@@ -11,13 +14,8 @@ export function Hero() {
       <HeroBackdrop />
 
       <div className="shell relative pb-14 pt-[calc(68px+clamp(1.75rem,1.2rem+2.4vw,3.25rem))] sm:pb-20">
-        {/*
-          Grade explícita: no mobile a ordem é argumento → VSL → CTA. No desktop
-          a VSL ocupa a coluna larga e atravessa as duas linhas, com o CTA logo
-          abaixo da promessa — sem o vão que aparecia ao alinhar pela base.
-        */}
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:items-start lg:gap-x-12 lg:gap-y-9 xl:gap-x-16">
-          <div className="lg:col-start-1 lg:row-start-1">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-x-12 xl:gap-x-16">
+          <div>
             <Reveal>
               <p className="inline-flex items-center gap-2.5 rounded-full border border-[color-mix(in_oklab,var(--color-brass)_32%,transparent)] py-1.5 pl-2.5 pr-3.5 sm:py-2 sm:pl-3 sm:pr-4">
                 <span aria-hidden="true" className="block h-1.5 w-1.5 shrink-0 rounded-full bg-brass" />
@@ -32,41 +30,95 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={140}>
-              <p className="t-lead mt-5 max-w-[40ch] text-bone/70">{hero.subtitle}</p>
+              <p className="mt-5 max-w-[34ch] text-[clamp(1.15rem,1rem+0.75vw,1.6rem)] font-medium leading-[1.35] tracking-[-0.018em] text-bone/78">
+                {hero.subtitle}
+              </p>
+            </Reveal>
+
+            <Reveal delay={210}>
+              <EventFacts />
+            </Reveal>
+
+            <Reveal delay={280}>
+              <CtaButton location="hero" className="mt-9 w-full sm:w-auto">
+                {hero.cta}
+              </CtaButton>
             </Reveal>
           </div>
 
-          <Reveal delay={200} className="lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
-            <VslPlayer />
-          </Reveal>
-
-          <Reveal delay={260} className="lg:col-start-1 lg:row-start-2">
-            <CtaButton location="hero" className="w-full sm:w-auto">
-              {hero.cta}
-            </CtaButton>
+          <Reveal delay={200} className="lg:justify-self-end">
+            <HostPortrait />
           </Reveal>
         </div>
-
-        {/* Faixa de fatos: compacta, apenas o que o programa já declara. */}
-        <Reveal delay={300}>
-          <ul className="mt-11 flex flex-wrap items-center gap-x-6 gap-y-2.5 border-t border-[color-mix(in_oklab,var(--color-brass)_20%,transparent)] pt-5 sm:mt-14 sm:gap-x-10">
-            {hero.facts.map((fact) => (
-              <li key={fact} className="t-label flex items-center gap-2.5 text-bone/50">
-                <span aria-hidden="true" className="block h-px w-3.5 shrink-0 bg-brass sm:w-4" />
-                {fact}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
       </div>
     </section>
   );
 }
 
+/** Data, horário, local, vagas e investimento: os fatos que decidem a inscrição. */
+function EventFacts() {
+  const linhas = [
+    { rotulo: "Data", valor: event.dateLabel },
+    { rotulo: "Horário", valor: event.timeLabel },
+    { rotulo: "Local", valor: `${event.venue}, ${event.city} — ${event.state}` },
+    { rotulo: "Vagas", valor: `Apenas ${seats}` },
+    { rotulo: "Investimento", valor: formatPrice() },
+  ];
+
+  return (
+    <dl className="mt-9 grid gap-0 border-t border-[color-mix(in_oklab,var(--color-brass)_22%,transparent)] sm:max-w-[30rem]">
+      {linhas.map((linha) => (
+        <div
+          key={linha.rotulo}
+          className="flex items-baseline justify-between gap-6 border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3"
+        >
+          <dt className="t-label shrink-0 text-bone/50">{linha.rotulo}</dt>
+          <dd className="tnum m-0 text-right text-[0.9375rem] font-medium text-bone">{linha.valor}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 /**
- * Fundo do hero: colunas em latão quase invisíveis (a estrutura como voz) e um
- * halo de verde profundo atrás do vídeo. Tudo em CSS — nenhum asset carregado.
+ * O fundo do estúdio é quase preto e funde com a superfície escura da página.
+ * A máscara nas bordas remove o corte retangular e deixa a figura “nascer” do
+ * fundo, sem precisar recortar o assunto.
  */
+function HostPortrait() {
+  return (
+    <figure className="relative m-0 w-full max-w-[26rem] lg:max-w-none">
+      {/*
+        O fundo do estúdio é cinza neutro e mais claro que o verde-tinta da
+        página, então o retângulo aparecia. A máscara dissolve as bordas e a
+        camada de tinta puxa o cinza para o verde da marca — a figura nasce do
+        fundo em vez de ser colada sobre ele.
+      */}
+      <span className="relative block [mask-image:radial-gradient(125%_82%_at_50%_44%,black_38%,transparent_86%)]">
+        <Image
+          src="/thiago/thiago-hero.jpg"
+          alt="Thiago Moura, que conduz a imersão Operação Linha de Frente"
+          width={1100}
+          height={1374}
+          priority
+          sizes="(max-width: 1024px) 90vw, 420px"
+          className="block h-auto w-full"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 mix-blend-color"
+          style={{ backgroundColor: "color-mix(in oklab, var(--color-forest) 55%, transparent)" }}
+        />
+      </span>
+      <figcaption className="t-label mt-1 flex items-center gap-3 text-bone/45">
+        <span aria-hidden="true" className="block h-px w-6 shrink-0 bg-brass" />
+        {content.host.name}
+      </figcaption>
+    </figure>
+  );
+}
+
+/** Colunas em latão quase invisíveis e halo verde profundo. Tudo em CSS. */
 function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
