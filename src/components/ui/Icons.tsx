@@ -1,8 +1,8 @@
 /**
  * Conjunto próprio de ícones de traço, desenhado para esta página.
  *
- * São seis formas; uma biblioteca de ícones traria centenas e um peso que não
- * se justifica. Todos partilham a mesma grade de 24, traço de 1.5 e junções
+ * Uma biblioteca de ícones traria centenas de formas e um peso que não se
+ * justifica pelas poucas que a página usa. Todos partilham a mesma grade de 24, traço de 1.5 e junções
  * arredondadas, e herdam a cor do texto — é o que os faz parecer uma família.
  */
 
@@ -84,6 +84,83 @@ export function IconClock({ size = 22, className }: IconProps) {
     <svg {...base(size, className)}>
       <circle cx="12" cy="12" r="8.6" />
       <path d="M12 7.2V12l3.2 2" />
+    </svg>
+  );
+}
+
+/* --- Perfis da imersão ---------------------------------------------------- */
+
+/** Trabalho na secretaria da clínica. */
+export function IconDesk({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M3 12h18M4.5 12V7.5A1.5 1.5 0 0 1 6 6h12a1.5 1.5 0 0 1 1.5 1.5V12" />
+      <path d="M5 12v6M19 12v6M9 9h6" />
+    </svg>
+  );
+}
+
+/** Recepção, primeiro contato presencial. */
+export function IconBell({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4 17h16M6 17a6 6 0 0 1 12 0" />
+      <path d="M12 5.5V7" />
+      <circle cx="12" cy="4.4" r="1.1" />
+      <path d="M3 20.5h18" />
+    </svg>
+  );
+}
+
+/** Comunicação com segurança. */
+export function IconChat({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M20.5 12.4c0 3.9-3.8 7-8.5 7-1 0-2-.14-2.9-.4L4 20.5l1.6-3.7A6.6 6.6 0 0 1 3.5 12.4c0-3.9 3.8-7 8.5-7s8.5 3.1 8.5 7Z" />
+      <path d="M9 11.5h6M9 14h3.5" />
+    </svg>
+  );
+}
+
+/** Profissional preparada e valorizada. */
+export function IconAward({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="12" cy="9" r="5.2" />
+      <path d="m8.6 13.6-1.3 6.9 4.7-2.6 4.7 2.6-1.3-6.9" />
+    </svg>
+  );
+}
+
+/** Objeções, agendas cheias, nós a desatar. */
+export function IconTangle({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M4 6c5 0 5 12 10 12 3 0 4-2 4-4" />
+      <path d="M20 8c-5 0-5 10-10 10" />
+      <circle cx="4" cy="6" r="1.4" />
+      <circle cx="20" cy="8" r="1.4" />
+    </svg>
+  );
+}
+
+/** Rotina organizada. */
+export function IconChecklist({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <path d="M10 7h10M10 12h10M10 17h6" />
+      <path d="m4 6.6 1.3 1.3L7.6 5.4M4 11.6l1.3 1.3 2.3-2.5M4 16.6l1.3 1.3 2.3-2.5" />
+    </svg>
+  );
+}
+
+/** Atendimento como estratégia. */
+export function IconStrategy({ size = 22, className }: IconProps) {
+  return (
+    <svg {...base(size, className)}>
+      <circle cx="12" cy="12" r="8.4" />
+      <circle cx="12" cy="12" r="4.2" />
+      <path d="M12 3.6V7M12 17v3.4M3.6 12H7M17 12h3.4" />
     </svg>
   );
 }

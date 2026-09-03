@@ -138,7 +138,7 @@ Baixadas 9 coloridas para seleção; duas em uso:
 | Arquivo em `public/thiago/` | Origem | Uso | Tratamento |
 |---|---|---|---|
 | `thiago-figura.webp` (920×1621, 124 KB) | `Thiago-0034.jpg` | Hero | Fundo removido com `rembg`, modelo `isnet-general-use`. O modelo de pessoas (`u2net_human_seg`) recortava melhor a silhueta mas comia o tablet que ele segura; o genérico preserva o objeto. WebP com alfa: o mesmo recorte em PNG passava de 1 MB. A base dissolve por máscara para não cortar seco na borda da seção |
-| `thiago-retrato.jpg` (900×1124, 64 KB) | `Thiago-0026.jpg` | Seção "Quem vai te guiar" | Recorte 4:5, sem máscara (fica sobre superfície clara) |
+| `thiago-retrato-figura.webp` (860×1598, 112 KB) | `Thiago-0026.jpg` | Seção "Quem vai te guiar" | Fundo removido com `rembg`/`isnet-general-use`, mesmo tratamento do hero. A seção passou a superfície escura para a figura integrar; sobre o bone ela pareceria colada |
 
 As 20 fotos coloridas restantes, as 22 em preto e branco e a imagem da subpasta
 "IA" não foram baixadas. Se a direção de arte pedir outra seleção, os IDs estão
