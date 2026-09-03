@@ -120,7 +120,8 @@ export const content = {
     ],
     remate:
       "A Operação Linha de Frente não é um “curso de secretária”. É um treinamento de operação de clínica, focado onde a maioria das oportunidades se perde: a linha de frente.",
-    cta: "Quero garantir minha vaga para minha secretária",
+    // Encurtado a pedido do cliente; original em COPY_NOTES.md.
+    cta: "Inscrever minha secretária",
   },
 
   host: {

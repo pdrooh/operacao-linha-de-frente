@@ -64,6 +64,12 @@ aprovação do cliente:
 - **Garantia** — continua sem menção na copy. `offer.guarantee.enabled` segue
   `false`; nada sobre garantia é publicado.
 
+## Alterações pedidas pelo cliente
+
+| Onde | Original (documento oficial) | Publicado | Motivo |
+|---|---|---|---|
+| CTA da seção "Para o médico ou gestor" | "QUERO GARANTIR MINHA VAGA PARA MINHA SECRETÁRIA" | "Inscrever minha secretária" | Rótulo longo demais para um botão; quebrava em três linhas no mobile. Pedido do cliente em 03/09/2026. |
+
 ## COPY SUGGESTION
 
 Nenhuma pendente.

@@ -7,8 +7,12 @@ import { content } from "@/config/content";
 const host = content.host;
 
 export function Host() {
+  /*
+    `overflow-hidden` na seção: o mostrador e o halo passam da figura de
+    propósito, e sem contenção vazavam da viewport no mobile.
+  */
   return (
-    <Section id="thiago-moura" index={8} station={host.station} tone="deep">
+    <Section id="thiago-moura" index={8} station={host.station} tone="deep" className="overflow-hidden">
       <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
           <HostFigure />
@@ -65,7 +69,7 @@ export function Host() {
  */
 function HostFigure() {
   return (
-    <figure className="relative m-0 w-full max-w-[24rem] lg:max-w-none">
+    <figure className="relative m-0 w-full max-w-[19rem] sm:max-w-[21rem] lg:max-w-[22rem] lg:justify-self-start">
       <span
         aria-hidden="true"
         className="absolute left-1/2 top-1/2 block aspect-square w-[118%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[72px]"
@@ -84,7 +88,7 @@ function HostFigure() {
         height={1598}
         loading="lazy"
         /* Renderiza a ~456px no desktop; pedir 400 fazia o navegador ampliar. */
-        sizes="(max-width: 1024px) 80vw, 480px"
+        sizes="(max-width: 1024px) 70vw, 352px"
         className="relative block h-auto w-full [mask-image:linear-gradient(to_bottom,black_82%,transparent_99%)]"
       />
     </figure>
