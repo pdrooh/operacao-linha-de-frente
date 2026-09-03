@@ -137,7 +137,7 @@ Baixadas 9 coloridas para seleção; duas em uso:
 
 | Arquivo em `public/thiago/` | Origem | Uso | Tratamento |
 |---|---|---|---|
-| `thiago-hero.jpg` (1100×1374, 88 KB) | `Thiago-0034.jpg` | Hero | Recorte 4:5, máscara radial nas bordas e camada de tinta verde em `mix-blend-mode: color` — o fundo do estúdio é cinza neutro e mais claro que o verde-tinta da página, e sem isso aparecia um retângulo colado sobre o fundo |
+| `thiago-figura.webp` (920×1621, 124 KB) | `Thiago-0034.jpg` | Hero | Fundo removido com `rembg`, modelo `isnet-general-use`. O modelo de pessoas (`u2net_human_seg`) recortava melhor a silhueta mas comia o tablet que ele segura; o genérico preserva o objeto. WebP com alfa: o mesmo recorte em PNG passava de 1 MB. A base dissolve por máscara para não cortar seco na borda da seção |
 | `thiago-retrato.jpg` (900×1124, 64 KB) | `Thiago-0026.jpg` | Seção "Quem vai te guiar" | Recorte 4:5, sem máscara (fica sobre superfície clara) |
 
 As 20 fotos coloridas restantes, as 22 em preto e branco e a imagem da subpasta

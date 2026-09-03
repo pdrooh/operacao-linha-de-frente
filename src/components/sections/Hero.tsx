@@ -94,38 +94,63 @@ function EventFacts() {
 }
 
 /**
- * O fundo do estúdio é quase preto e funde com a superfície escura da página.
- * A máscara nas bordas remove o corte retangular e deixa a figura “nascer” do
- * fundo, sem precisar recortar o assunto.
+ * Retrato recortado.
+ *
+ * O fundo do estúdio foi removido, então a figura fica sobre o verde da página
+ * em vez de dentro de um retângulo. Atrás dela, um anel de latão e um halo dão
+ * profundidade e prendem a silhueta: sem eles, uma figura recortada flutua sem
+ * âncora. A cabeça ultrapassa o topo do anel de propósito, para a composição
+ * ter sobreposição em vez de um alvo centralizado.
  */
 function HostPortrait() {
   return (
-    <figure className="relative m-0 w-full max-w-[26rem] lg:max-w-none">
-      {/*
-        O fundo do estúdio é cinza neutro e mais claro que o verde-tinta da
-        página, então o retângulo aparecia. A máscara dissolve as bordas e a
-        camada de tinta puxa o cinza para o verde da marca — a figura nasce do
-        fundo em vez de ser colada sobre ele.
-      */}
-      <span className="relative block [mask-image:radial-gradient(125%_82%_at_50%_44%,black_38%,transparent_86%)]">
-        <Image
-          src="/thiago/thiago-hero.jpg"
-          alt="Thiago Moura, que conduz a imersão Operação Linha de Frente"
-          width={1100}
-          height={1374}
-          priority
-          sizes="(max-width: 1024px) 90vw, 420px"
-          className="block h-auto w-full"
-        />
+    <figure className="relative m-0 w-full max-w-[24rem] lg:max-w-[27rem]">
+      <div className="relative">
         <span
           aria-hidden="true"
-          className="absolute inset-0 mix-blend-color"
-          style={{ backgroundColor: "color-mix(in oklab, var(--color-forest) 55%, transparent)" }}
+          className="absolute left-1/2 top-[38%] block aspect-square w-[112%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-[64px]"
+          style={{
+            background:
+              "radial-gradient(closest-side, color-mix(in oklab, var(--color-forest-vivid) 55%, transparent), transparent)",
+          }}
         />
-      </span>
-      <figcaption className="t-label mt-1 flex items-center gap-3 text-bone/45">
-        <span aria-hidden="true" className="block h-px w-6 shrink-0 bg-brass" />
-        {content.host.name}
+
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 200 200"
+          className="absolute left-1/2 top-[38%] w-[104%] -translate-x-1/2 -translate-y-1/2"
+        >
+          <circle cx="100" cy="100" r="86" fill="none" stroke="var(--color-brass)" strokeOpacity="0.38" strokeWidth="0.4" />
+          <circle
+            cx="100"
+            cy="100"
+            r="70"
+            fill="none"
+            stroke="var(--color-brass)"
+            strokeOpacity="0.16"
+            strokeWidth="0.4"
+            strokeDasharray="1.5 4"
+          />
+        </svg>
+
+        <Image
+          src="/thiago/thiago-figura.webp"
+          alt="Thiago Moura, que conduz a imersão Operação Linha de Frente"
+          width={920}
+          height={1621}
+          priority
+          sizes="(max-width: 1024px) 80vw, 432px"
+          /* A base dissolve em vez de cortar seco na borda da seção. */
+          className="relative block h-auto w-full [mask-image:linear-gradient(to_bottom,black_74%,transparent_97%)]"
+        />
+      </div>
+
+      <figcaption className="mt-2 flex items-start gap-3">
+        <span aria-hidden="true" className="mt-2 block h-px w-6 shrink-0 bg-brass" />
+        <span>
+          <span className="block text-[0.9375rem] font-medium text-bone">{content.host.name}</span>
+          <span className="t-label mt-1 block text-bone/50">{hero.hostCaption}</span>
+        </span>
       </figcaption>
     </figure>
   );

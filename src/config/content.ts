@@ -20,6 +20,8 @@ export const content = {
     subtitle:
       "Imersão presencial para secretárias que querem transformar o atendimento em um diferencial para a clínica.",
     cta: "Quero garantir minha vaga",
+    // auxiliar — legenda do retrato
+    hostCaption: "Quem conduz a imersão",
   },
 
   problem: {
