@@ -43,12 +43,31 @@ export function Audience() {
             >
               <article
                 className={cn(
-                  "group h-full rounded-md border border-rule bg-bone-raised p-6 sm:p-7",
-                  "transition-[border-color,transform,box-shadow] duration-400 [transition-timing-function:var(--ease-out-quint)]",
-                  "hover:-translate-y-0.5 hover:border-brass hover:shadow-[var(--shadow-lift)]",
+                  "group relative h-full overflow-hidden rounded-md bg-bone-raised p-6 sm:p-7",
+                  "border transition-[border-color,transform,box-shadow] duration-400 [transition-timing-function:var(--ease-out-quint)]",
+                  "hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]",
+                  // O sétimo resume os outros seis, então já vem com a borda em latão.
+                  ultimo ? "border-[color-mix(in_oklab,var(--color-brass)_55%,transparent)]" : "border-rule hover:border-brass",
                 )}
               >
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-rule text-brass-deep transition-colors duration-400 group-hover:border-brass">
+                {/* Fio de latão no topo, o mesmo do painel de investimento. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px opacity-70 transition-opacity duration-400 group-hover:opacity-100"
+                  style={{
+                    background:
+                      "linear-gradient(to right, transparent, var(--color-brass), transparent)",
+                  }}
+                />
+
+                <span
+                  className={cn(
+                    "grid h-11 w-11 place-items-center rounded-full text-brass-deep",
+                    "border border-[color-mix(in_oklab,var(--color-brass)_45%,transparent)]",
+                    "bg-[color-mix(in_oklab,var(--color-brass)_13%,transparent)]",
+                    "transition-colors duration-400 group-hover:border-brass group-hover:bg-[color-mix(in_oklab,var(--color-brass)_22%,transparent)]",
+                  )}
+                >
                   <Icone />
                 </span>
                 <p
