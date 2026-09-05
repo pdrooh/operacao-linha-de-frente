@@ -35,3 +35,48 @@ describe("proximaPosicao", () => {
     }
   });
 });
+
+/**
+ * Regressão: o navegador encaixa `scrollLeft` na grade de pixels do
+ * dispositivo. Ler a posição de volta do DOM a cada quadro perde a fração, e o
+ * erro tem duas caras conforme a velocidade:
+ *
+ *  - passo menor que meio pixel arredonda para zero e a faixa trava;
+ *  - passo maior arredonda para cima e a faixa corre quase o dobro do certo.
+ *
+ * Nos dois casos a correção é a mesma: a posição exata vive em JS, e o DOM só
+ * recebe o resultado.
+ */
+describe("posição exata contra o arredondamento do navegador", () => {
+  /** Uma tela 1x guarda `scrollLeft` só em pixels inteiros. */
+  const encaixa1x = (v: number) => Math.round(v);
+
+  const QUADRO = 0.016;
+  const QUADROS = 120; // 1,92s a 60fps
+
+  function simula(velocidade: number, lendoDoDom: boolean) {
+    let exata = 0;
+    let noDom = 0;
+    for (let i = 0; i < QUADROS; i++) {
+      const base = lendoDoDom ? noDom : exata;
+      exata = proximaPosicao(base, 1000, velocidade, QUADRO);
+      noDom = encaixa1x(exata);
+    }
+    return noDom;
+  }
+
+  it("trava em zero quando o passo por quadro fica abaixo de meio pixel", () => {
+    // 26px/s dá 0,416 por quadro, que arredonda para 0 em tela 1x.
+    expect(simula(26, true)).toBe(0);
+  });
+
+  it("corre rápido demais quando o passo arredonda para cima", () => {
+    // 34px/s dá 0,544 por quadro, que vira 1: quase o dobro do esperado (65).
+    expect(simula(34, true)).toBe(120);
+  });
+
+  it("avança certo em qualquer velocidade quando a posição vive em JS", () => {
+    expect(simula(26, false)).toBe(50); // 26 × 1,92 ≈ 49,9
+    expect(simula(34, false)).toBe(65); // 34 × 1,92 ≈ 65,3
+  });
+});

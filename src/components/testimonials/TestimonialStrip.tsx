@@ -9,8 +9,8 @@ import { proximaPosicao } from "@/lib/carousel/marquee";
 import { cn } from "@/lib/utils/cn";
 import { attachSource } from "@/lib/video/attach-source";
 
-/** Pixels por segundo. Devagar de propósito: dá tempo de ler a citação. */
-const VELOCIDADE = 26;
+/** Pixels por segundo. Calmo o bastante para dar tempo de ler a citação. */
+const VELOCIDADE = 34;
 
 /**
  * Faixa de depoimentos em rolagem contínua.
@@ -51,6 +51,16 @@ export function TestimonialStrip() {
     const trilho = trilhoRef.current;
     if (!trilho || !podeAnimar || pausadoPeloUsuario || ativo !== null) return;
 
+    /*
+      A posição exata vive aqui, não no DOM.
+
+      O navegador encaixa `scrollLeft` na grade de pixels do dispositivo: numa
+      tela 2x, 0,416 vira 0,5; numa tela 1x, vira 0. Ler a posição de volta a
+      cada quadro perdia a fração — e em 1x a faixa simplesmente não saía do
+      lugar, porque o passo era arredondado para zero todas as vezes.
+    */
+    let posicao = trilho.scrollLeft;
+    let ultimaEscrita = posicao;
     let frame = 0;
     let anterior = performance.now();
 
@@ -59,12 +69,14 @@ export function TestimonialStrip() {
       anterior = agora;
 
       if (!pausas.current.ponteiro && !pausas.current.foco && !document.hidden) {
-        trilho.scrollLeft = proximaPosicao(
-          trilho.scrollLeft,
-          trilho.scrollWidth / 2,
-          VELOCIDADE,
-          delta,
-        );
+        // Se o usuário arrastou a faixa, seguimos de onde ele parou.
+        if (Math.abs(trilho.scrollLeft - ultimaEscrita) > 2) {
+          posicao = trilho.scrollLeft;
+        }
+
+        posicao = proximaPosicao(posicao, trilho.scrollWidth / 2, VELOCIDADE, delta);
+        trilho.scrollLeft = posicao;
+        ultimaEscrita = trilho.scrollLeft;
       }
 
       frame = requestAnimationFrame(passo);
