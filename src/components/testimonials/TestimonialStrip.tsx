@@ -5,17 +5,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { testimonials, type Testimonial } from "@/config/testimonials";
 import { analytics } from "@/lib/analytics";
+import { cn } from "@/lib/utils/cn";
 import { attachSource } from "@/lib/video/attach-source";
 
 /**
  * Faixa de depoimentos com reprodução no próprio cartão.
  *
- * Clicar toca ali mesmo — sem modal, sem tirar a pessoa da página. Só um vídeo
- * existe no DOM por vez (o do cartão ativo), então nove depoimentos não viram
- * nove players carregando em paralelo.
+ * Só o retrato é botão; a citação e a atribuição ficam fora dele, porque texto
+ * longo dentro de botão atrapalha leitor de tela e não é clicável por acidente.
  *
- * Enquanto um profissional não tem `videoSrc`, o cartão é apenas identificação:
- * nada de botão de play que não leva a lugar nenhum.
+ * Um único <video> existe no DOM por vez, o do cartão ativo: dez depoimentos
+ * não viram dez players carregando em paralelo.
  */
 export function TestimonialStrip() {
   const [ativo, setAtivo] = useState<string | null>(null);
@@ -30,85 +30,97 @@ export function TestimonialStrip() {
       {testimonials.map((person, index) => (
         <li
           key={person.id}
-          className="shrink-0"
+          className="flex w-[76vw] max-w-[300px] shrink-0 flex-col sm:w-[290px]"
           style={{ marginTop: index % 2 === 1 ? "1.5rem" : undefined }}
         >
-          {ativo === person.id && person.videoSrc ? (
-            <Player person={person} onEnd={() => setAtivo(null)} />
-          ) : (
-            <Capa person={person} onPlay={person.videoSrc ? () => tocar(person) : undefined} />
-          )}
+          <Card person={person} ativo={ativo === person.id} onPlay={() => tocar(person)} onEnd={() => setAtivo(null)} />
         </li>
       ))}
     </ul>
   );
 }
 
-const CARTAO =
-  "portrait group relative block w-[62vw] max-w-[236px] overflow-hidden rounded-md bg-forest sm:w-[228px]";
+function Card({
+  person,
+  ativo,
+  onPlay,
+  onEnd,
+}: {
+  person: Testimonial;
+  ativo: boolean;
+  onPlay: () => void;
+  onEnd: () => void;
+}) {
+  const legenda = [person.specialty, person.city].filter(Boolean).join(" · ");
+
+  return (
+    <article className="flex h-full flex-col">
+      <div className="portrait group relative overflow-hidden rounded-md bg-forest">
+        {ativo && person.videoSrc ? (
+          <Player person={person} onEnd={onEnd} />
+        ) : (
+          <Capa person={person} onPlay={person.videoSrc ? onPlay : undefined} />
+        )}
+      </div>
+
+      {person.quote ? (
+        <blockquote className="m-0 mt-5 grow">
+          <p className="text-[1.0625rem] leading-snug text-graphite">
+            <span aria-hidden="true" className="text-brass-deep">“</span>
+            {person.quote}
+            <span aria-hidden="true" className="text-brass-deep">”</span>
+          </p>
+        </blockquote>
+      ) : (
+        <div className="grow" />
+      )}
+
+      <footer className="mt-4 border-t border-rule pt-4">
+        <p className="font-semibold leading-tight text-graphite">{person.name}</p>
+        {legenda ? <p className="t-meta mt-1 text-graphite-soft">{legenda}</p> : null}
+      </footer>
+    </article>
+  );
+}
 
 function Capa({ person, onPlay }: { person: Testimonial; onPlay?: () => void }) {
   const conteudo = (
-    <>
-      <span className="relative block aspect-[9/16] overflow-hidden">
-        <Image
-          src={person.poster}
-          alt={onPlay ? "" : [person.name, person.specialty].filter(Boolean).join(", ")}
-          fill
-          loading="lazy"
-          sizes="(max-width: 640px) 62vw, 236px"
-          className="portrait-media object-cover"
-        />
-        {/* Camada de tinta: unifica stills de gravações diferentes num duotone. */}
-        <span aria-hidden="true" className="portrait-tint absolute inset-0" />
+    <span className="relative block aspect-[9/16] overflow-hidden">
+      <Image
+        src={person.poster}
+        alt={onPlay ? "" : person.name}
+        fill
+        loading="lazy"
+        sizes="(max-width: 640px) 76vw, 300px"
+        className="portrait-media object-cover"
+      />
+      {/* Camada de tinta: unifica stills de gravações diferentes num duotone. */}
+      <span aria-hidden="true" className="portrait-tint absolute inset-0" />
+
+      {onPlay ? (
         <span
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-3/5"
-          style={{
-            background:
-              "linear-gradient(to top, color-mix(in oklab, var(--color-ink) 94%, transparent) 12%, transparent)",
-          }}
-        />
-
-        {onPlay ? (
-          <span
-            aria-hidden="true"
-            className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brass text-ink shadow-[0_10px_30px_-8px_oklch(0%_0_0_/_0.6)] transition-transform duration-400 [transition-timing-function:var(--ease-out-quint)] group-hover:scale-110"
-          >
-            <svg width="15" height="17" viewBox="0 0 20 23" fill="none" className="ml-0.5">
-              <path d="M0 0.6v21.8L19 11.5 0 0.6Z" fill="currentColor" />
-            </svg>
-          </span>
-        ) : null}
-      </span>
-
-      <span className="absolute inset-x-0 bottom-0 block p-4 text-left">
-        <span className="block text-[0.9375rem] font-semibold leading-tight text-bone">
-          {person.name}
+          className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brass text-ink shadow-[0_10px_30px_-8px_oklch(0%_0_0_/_0.6)] transition-transform duration-400 [transition-timing-function:var(--ease-out-quint)] group-hover:scale-110"
+        >
+          <svg width="15" height="17" viewBox="0 0 20 23" fill="none" className="ml-0.5">
+            <path d="M0 0.6v21.8L19 11.5 0 0.6Z" fill="currentColor" />
+          </svg>
         </span>
-        {person.specialty ? (
-          <span className="t-meta mt-1 block text-bone/65">{person.specialty}</span>
-        ) : null}
-      </span>
-    </>
+      ) : null}
+    </span>
   );
 
-  if (!onPlay) return <div className={CARTAO}>{conteudo}</div>;
+  if (!onPlay) return <div className="block w-full">{conteudo}</div>;
 
   return (
-    <button type="button" onClick={onPlay} className={`${CARTAO} cursor-pointer text-left`}>
-      <span className="sr-only">
-        Assistir ao depoimento de {[person.name, person.specialty].filter(Boolean).join(", ")}
-      </span>
+    <button type="button" onClick={onPlay} className={cn("block w-full cursor-pointer text-left")}>
+      <span className="sr-only">Assistir ao depoimento de {person.name}</span>
       {conteudo}
     </button>
   );
 }
 
-/**
- * O <video> substitui o botão em vez de ficar dentro dele: controle nativo
- * aninhado em botão seria inválido e capturaria os cliques do usuário.
- */
+/** O <video> substitui o botão: controle nativo dentro de botão seria inválido. */
 function Player({ person, onEnd }: { person: Testimonial; onEnd: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -139,17 +151,15 @@ function Player({ person, onEnd }: { person: Testimonial; onEnd: () => void }) {
   }, [person.videoSrc]);
 
   return (
-    <div className={`${CARTAO} ring-1 ring-brass`}>
-      <video
-        ref={videoRef}
-        className="block aspect-[9/16] w-full bg-ink object-cover"
-        poster={person.poster}
-        controls
-        playsInline
-        preload="metadata"
-        onEnded={onEnd}
-        aria-label={`Depoimento de ${[person.name, person.specialty].filter(Boolean).join(", ")}`}
-      />
-    </div>
+    <video
+      ref={videoRef}
+      className="block aspect-[9/16] w-full bg-ink object-cover ring-1 ring-brass"
+      poster={person.poster}
+      controls
+      playsInline
+      preload="metadata"
+      onEnded={onEnd}
+      aria-label={`Depoimento de ${person.name}`}
+    />
   );
 }

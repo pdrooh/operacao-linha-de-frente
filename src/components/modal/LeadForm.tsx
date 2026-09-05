@@ -222,7 +222,7 @@ function Field({
 
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-[0.8125rem] font-semibold tracking-[-0.005em] text-graphite">
+      <label htmlFor={id} className="mb-2 block text-[0.9375rem] font-semibold tracking-[-0.005em] text-graphite">
         {label}
       </label>
       <input

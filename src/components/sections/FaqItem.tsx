@@ -29,7 +29,7 @@ export function FaqItem({
       }}
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 [&::-webkit-details-marker]:hidden">
-        <span className="max-w-[46ch] text-[1.0625rem] font-semibold leading-snug tracking-[-0.015em] text-graphite transition-colors sm:text-[1.15rem] group-open:text-brass-deep">
+        <span className="max-w-[46ch] text-[1.125rem] font-semibold leading-snug tracking-[-0.015em] text-graphite transition-colors sm:text-[1.15rem] group-open:text-brass-deep">
           {question}
         </span>
         <span

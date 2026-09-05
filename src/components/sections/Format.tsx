@@ -30,7 +30,7 @@ export function Format() {
                   <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true" className="shrink-0">
                     <path d="M1 5.2L4.6 8.8L12 1.2" stroke="var(--color-brass-deep)" strokeWidth="1.6" />
                   </svg>
-                  <span className="text-[1.0625rem] text-graphite">{item}</span>
+                  <span className="text-[1.125rem] text-graphite">{item}</span>
                 </div>
               </Reveal>
             ))}

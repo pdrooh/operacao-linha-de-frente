@@ -74,7 +74,7 @@ export function SiteHeader() {
         <CtaButton
           location="header"
           variant="ghost"
-          className="hidden min-h-[44px] px-5 text-[0.6875rem] tracking-[0.12em] text-bone lg:inline-flex"
+          className="hidden min-h-[44px] px-5 text-[0.75rem] tracking-[0.12em] text-bone lg:inline-flex"
         >
           {content.hero.cta}
         </CtaButton>

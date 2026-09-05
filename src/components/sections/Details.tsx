@@ -37,7 +37,7 @@ export function Details() {
                   <dt className="t-label flex items-center border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4 pr-6 text-bone/55">
                     {linha.rotulo}
                   </dt>
-                  <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4 text-[1.0625rem] font-medium text-bone">
+                  <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-4 text-[1.125rem] font-medium text-bone">
                     {linha.valor}
                   </dd>
                 </Fragment>
@@ -61,7 +61,7 @@ export function Details() {
                   <svg width="13" height="10" viewBox="0 0 13 10" fill="none" aria-hidden="true" className="shrink-0">
                     <path d="M1 5.2L4.6 8.8L12 1.2" stroke="var(--color-brass)" strokeWidth="1.6" />
                   </svg>
-                  <span className="text-[1.0625rem] text-bone/85">{item}</span>
+                  <span className="text-[1.125rem] text-bone/85">{item}</span>
                 </div>
               </Reveal>
             ))}

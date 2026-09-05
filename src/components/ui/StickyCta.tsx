@@ -46,13 +46,13 @@ export function StickyCta() {
       inert={!shown}
     >
       <div className="flex items-center gap-3">
-        <p className="tnum shrink-0 whitespace-nowrap text-[0.8125rem] leading-tight text-bone/70">
+        <p className="tnum shrink-0 whitespace-nowrap text-[0.9375rem] leading-tight text-bone/70">
           <span className="block font-semibold text-bone">{formatPrice()}</span>
           <span>{offer.seats} vagas</span>
         </p>
         <button
           type="button"
-          className="btn btn-primary min-h-[52px] flex-1 px-4 text-[0.8125rem]"
+          className="btn btn-primary min-h-[52px] flex-1 px-4 text-[0.9375rem]"
           onClick={() => {
             analytics.track("cta_click", { location: "sticky" });
             open("sticky");

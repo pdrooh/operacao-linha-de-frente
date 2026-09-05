@@ -20,7 +20,7 @@ export function Hero() {
             <Reveal>
               <p className="inline-flex items-center gap-2.5 rounded-full border border-[color-mix(in_oklab,var(--color-brass)_32%,transparent)] py-1.5 pl-2.5 pr-3.5 sm:py-2 sm:pl-3 sm:pr-4">
                 <span aria-hidden="true" className="block h-1.5 w-1.5 shrink-0 rounded-full bg-brass" />
-                <span className="t-label text-[0.625rem] tracking-[0.14em] text-brass sm:text-[0.6875rem] sm:tracking-[0.19em]">
+                <span className="t-label text-[0.625rem] tracking-[0.14em] text-brass sm:text-[0.75rem] sm:tracking-[0.19em]">
                   {hero.eyebrow}
                 </span>
               </p>
@@ -84,7 +84,7 @@ function EventFacts() {
           <dt className="t-label flex items-center border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3 pr-6 text-bone/50">
             {linha.rotulo}
           </dt>
-          <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3 text-[0.9375rem] font-medium text-bone">
+          <dd className="tnum m-0 flex items-center justify-end border-b border-[color-mix(in_oklab,var(--color-brass)_14%,transparent)] py-3 text-[1rem] font-medium text-bone">
             {linha.valor}
           </dd>
         </Fragment>
@@ -148,7 +148,7 @@ function HostPortrait() {
       <figcaption className="mt-2 flex items-start gap-3">
         <span aria-hidden="true" className="mt-2 block h-px w-6 shrink-0 bg-brass" />
         <span>
-          <span className="block text-[0.9375rem] font-medium text-bone">{content.host.name}</span>
+          <span className="block text-[1rem] font-medium text-bone">{content.host.name}</span>
           <span className="t-label mt-1 block text-bone/50">{hero.hostCaption}</span>
         </span>
       </figcaption>

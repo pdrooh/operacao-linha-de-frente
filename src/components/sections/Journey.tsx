@@ -38,7 +38,7 @@ export function Journey() {
               <span aria-hidden="true" className="journey-dot" />
               <div className="journey-body">
                 <h3 className="t-label text-brass">{stage.name}</h3>
-                <p className="mt-2.5 text-[0.875rem] leading-relaxed text-bone/65">{stage.caption}</p>
+                <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-bone/65">{stage.caption}</p>
               </div>
             </li>
           ))}

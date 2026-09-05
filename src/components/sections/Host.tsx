@@ -44,7 +44,7 @@ export function Host() {
                   <span className="t-label tnum shrink-0 text-brass">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <p className="max-w-none text-[1.0625rem] leading-snug text-bone/88">{item}</p>
+                  <p className="max-w-none text-[1.125rem] leading-snug text-bone/88">{item}</p>
                 </div>
               </Reveal>
             ))}

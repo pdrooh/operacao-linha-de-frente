@@ -75,7 +75,7 @@ export function Audience() {
                     "mt-5 text-graphite",
                     ultimo
                       ? "t-h3 max-w-[30ch]"
-                      : "text-[1.0625rem] leading-snug",
+                      : "text-[1.125rem] leading-snug",
                   )}
                 >
                   {item}
